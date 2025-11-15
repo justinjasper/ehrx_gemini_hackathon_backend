@@ -68,6 +68,32 @@ app.add_middleware(
 OUTPUT_DIR = Path("/tmp/ehrx_output")
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
+SAMPLE_DOCS_DIR = Path(os.getenv("SAMPLE_DOCS_DIR", "./SampleEHR_docs")).resolve()
+SAMPLE_DOCS_DIR.mkdir(parents=True, exist_ok=True)
+
+def _discover_sample_documents() -> list[dict]:
+    docs = []
+    if not SAMPLE_DOCS_DIR.exists():
+        logger.warning(f"Sample docs dir not found: {SAMPLE_DOCS_DIR}")
+        return docs
+    for pdf in sorted(SAMPLE_DOCS_DIR.glob("*.pdf")):
+        docs.append({
+            "id": pdf.name,
+            "filename": pdf.name,
+            "display_name": pdf.stem.replace("_", " "),
+            "size_bytes": pdf.stat().st_size
+        })
+    return docs
+
+SAMPLE_DOCS_CACHE = _discover_sample_documents()
+
+
+def _ensure_sample_document(filename: str) -> Path:
+    for doc in SAMPLE_DOCS_CACHE:
+        if doc["filename"] == filename:
+            return SAMPLE_DOCS_DIR / filename
+    raise HTTPException(status_code=404, detail=f"Sample document {filename} not found")
+
 # Global pipeline instance (initialized lazily)
 vlm_config = None
 pipeline = None
@@ -104,6 +130,42 @@ def _get_document_paths(document_id: str) -> dict:
     }
 
 
+def _process_pdf_file(
+    pdf_path: str,
+    original_filename: str,
+    page_range: str,
+    document_type: str
+) -> dict:
+    """Shared PDF processing routine."""
+    document_id = f"{Path(original_filename).stem}_{int(datetime.utcnow().timestamp())}"
+    doc_paths = _get_document_paths(document_id)
+    doc_paths["dir"].mkdir(parents=True, exist_ok=True)
+
+    pipeline_instance = get_pipeline()
+    document = pipeline_instance.process_document(
+        pdf_path=pdf_path,
+        output_dir=str(doc_paths["dir"]),
+        page_range=page_range,
+        document_context={"document_type": document_type}
+    )
+
+    grouper = SubDocumentGrouper(confidence_threshold=0.80)
+    enhanced_doc = grouper.group_document(document)
+
+    with open(doc_paths["enhanced"], "w") as f:
+        json.dump(enhanced_doc, f, indent=2)
+
+    index = generate_hierarchical_index(enhanced_doc)
+    with open(doc_paths["index"], "w") as f:
+        json.dump(index, f, indent=2)
+
+    return {
+        "document_id": document_id,
+        "document": document,
+        "enhanced": enhanced_doc
+    }
+
+
 @app.get("/")
 async def root():
     """Root endpoint - API information."""
@@ -114,6 +176,8 @@ async def root():
         "endpoints": {
             "health": "/health",
             "upload": "/upload (POST)",
+            "sample_documents": "/sample-documents (GET)",
+            "process_sample": "/sample-documents/{filename}/process (POST)",
             "ontology": "/documents/{id}/ontology (GET)",
             "query": "/documents/{id}/query (POST)",
             "docs": "/docs"
@@ -173,56 +237,64 @@ async def upload_document(
         
         logger.info(f"Saved PDF to: {tmp_pdf_path}")
         
-        # Generate document ID
-        document_id = f"{Path(file.filename).stem}_{int(datetime.utcnow().timestamp())}"
-        output_path = OUTPUT_DIR / document_id
-        output_path.mkdir(parents=True, exist_ok=True)
-        
-        # Process the PDF
-        logger.info(f"Starting processing for document: {document_id}")
-        
-        pipeline_instance = get_pipeline()
-        document = pipeline_instance.process_document(
+        result = _process_pdf_file(
             pdf_path=tmp_pdf_path,
-            output_dir=str(output_path),
+            original_filename=file.filename,
             page_range=page_range,
-            document_context={"document_type": document_type}
+            document_type=document_type
         )
-        
-        # Group sub-documents
-        logger.info("Grouping sub-documents")
-        grouper = SubDocumentGrouper(confidence_threshold=0.80)
-        enhanced_doc = grouper.group_document(document)
-        
-        # Save enhanced document
-        enhanced_path = output_path / f"{document_id}_enhanced.json"
-        with open(enhanced_path, 'w') as f:
-            json.dump(enhanced_doc, f, indent=2)
-        
-        # Generate index
-        index = generate_hierarchical_index(enhanced_doc)
-        index_path = output_path / f"{document_id}_index.json"
-        with open(index_path, 'w') as f:
-            json.dump(index, f, indent=2)
-        
-        # Clean up temp file
         os.unlink(tmp_pdf_path)
-        
-        logger.info(f"Processing complete for document: {document_id}")
-        
+
+        document = result["document"]
         total_pages = document.get("total_pages") or document["processing_stats"].get("total_pages")
         status = "complete"
         
         return {
-            "document_id": document_id,
+            "document_id": result["document_id"],
             "status": status,
             "total_pages": total_pages,
-            "enhanced_json_url": f"/documents/{document_id}/ontology"
+            "enhanced_json_url": f"/documents/{result['document_id']}/ontology"
         }
         
     except Exception as e:
         logger.error(f"Processing failed: {e}", exc_info=True)
         raise HTTPException(status_code=500, detail=f"Processing failed: {str(e)}")
+
+
+@app.get("/sample-documents")
+async def list_sample_documents():
+    """Return available bundled sample PDFs."""
+    return {"samples": SAMPLE_DOCS_CACHE}
+
+
+@app.post("/sample-documents/{filename}/process")
+async def process_sample_document(
+    filename: str,
+    page_range: str = "all",
+    document_type: str = "Clinical EHR"
+):
+    """Process a bundled sample PDF."""
+    sample_path = _ensure_sample_document(filename)
+    logger.info(f"Processing sample document: {sample_path}")
+
+    result = _process_pdf_file(
+        pdf_path=str(sample_path),
+        original_filename=filename,
+        page_range=page_range,
+        document_type=document_type
+    )
+
+    document = result["document"]
+    total_pages = document.get("total_pages") or document.get("processing_stats", {}).get("total_pages")
+
+    return {
+        "document_id": result["document_id"],
+        "status": "complete",
+        "total_pages": total_pages,
+        "enhanced_json_url": f"/documents/{result['document_id']}/ontology",
+        "source": "sample_document",
+        "filename": filename
+    }
 
 
 @app.get("/documents/{document_id}/ontology")
