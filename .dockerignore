@@ -1,0 +1,83 @@
+# Git files
+.git
+.gitignore
+.gitattributes
+
+# Python cache and bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+*.cover
+
+# Documentation
+*.md
+docs/
+*.rst
+
+# Output and data directories
+output/
+logs/
+*.log
+debug/
+
+# Temporary files
+*.tmp
+*.bak
+tmp/
+temp/
+
+# Large data files (mount as volumes instead)
+SampleEHR_docs/
+*.pdf
+
+# Sensitive files
+.env
+*.key
+*.pem
+credentials.json
+*credentials*.json
+
+# CI/CD
+.github/
+.gitlab-ci.yml
+.travis.yml
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+wheels/
+
+# Jupyter notebooks
+*.ipynb
+.ipynb_checkpoints/
+
+# OS files
+Thumbs.db
+Desktop.ini
+
