@@ -79,3 +79,4 @@ SENSITIVE_ehr2_copy.pdf
 test_output
 .env
 .secrets
+output/
