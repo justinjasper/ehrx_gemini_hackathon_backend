@@ -6,7 +6,7 @@
 ## Team
 
 **Justin Jasper**
-Stanford CS (AI) Master's Student
+Stanford CS (AI) Master's Student; prior experience in Healthcare AI development
 
 **Xander Hnasko**
 Stanford CS (AI) Master's Student; prior experience in unstructured data ingestion within private financial markets. 
