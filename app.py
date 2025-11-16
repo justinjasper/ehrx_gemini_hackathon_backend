@@ -177,6 +177,7 @@ async def root():
             "health": "/health",
             "upload": "/upload (POST)",
             "sample_documents": "/sample-documents (GET)",
+            "sample_preview": "/sample-documents/{filename} (GET)",
             "process_sample": "/sample-documents/{filename}/process (POST)",
             "ontology": "/documents/{id}/ontology (GET)",
             "query": "/documents/{id}/query (POST)",
