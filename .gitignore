@@ -46,7 +46,7 @@ htmlcov/
 data/
 runs/
 assets/
-*.pdf
+# *.pdf
 *.png
 *.jpg
 *.jpeg
