@@ -57,7 +57,10 @@ temp/
 !SampleEHR_docs/
 !SampleEHR_docs/**/*.pdf
 !precomputed_samples/
-!precomputed_samples/**/*.pdf
+# Include immediate subdirectories (precomputed_samples/name/)
+!precomputed_samples/*/
+# Include canonical JSON at precomputed_samples/name/name.json
+!precomputed_samples/*/*.json
 
 # Sensitive files
 .env
