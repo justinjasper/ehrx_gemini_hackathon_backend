@@ -239,12 +239,31 @@ def load_precomputed_cache_from_repo() -> None:
       Canonical (preferred):
         precomputed_samples/<doc_id>/<doc_id>.json
         precomputed_samples/<doc_id>/metadata.json
+      Flat (supported):
+        precomputed_samples/<doc_id>.json
       Legacy fallbacks:
         precomputed_samples/<doc_id>/<doc_id>_enhanced.json
         precomputed_samples/<doc_id>/<doc_id>_index.json
     """
     if not PRECOMPUTED_DIR.exists():
         return
+    # Load flat files at root: precomputed_samples/<doc_id>.json
+    for flat_json in PRECOMPUTED_DIR.glob("*.json"):
+        try:
+            doc_id = flat_json.stem
+            with open(flat_json, "r") as f:
+                enhanced_json = json.load(f)
+            IN_MEMORY_ONTOLOGY[doc_id] = enhanced_json
+            PRECOMPUTED_DOC_IDS.add(doc_id)
+            # Assume PDF filename matches doc_id + ".pdf"
+            PRECOMPUTED_SAMPLE_MAP[f"{doc_id}.pdf"] = doc_id
+            # Mirror into OUTPUT_DIR for listing parity
+            out_paths = _get_document_paths(doc_id)
+            out_paths["dir"].mkdir(parents=True, exist_ok=True)
+            with open(out_paths["enhanced"], "w") as f:
+                json.dump(enhanced_json, f, indent=2)
+        except Exception as e:
+            logger.warning(f"Failed loading precomputed flat file {flat_json}: {e}")
     for doc_dir in PRECOMPUTED_DIR.iterdir():
         if not doc_dir.is_dir():
             continue
@@ -462,11 +481,14 @@ async def process_sample_document(
         enhanced = IN_MEMORY_ONTOLOGY.get(stable_doc_id)
         if enhanced is None:
             # Try from precomputed dir first (canonical, then legacy)
+            pre_dir_flat = PRECOMPUTED_DIR / f"{stable_doc_id}.json"
             pre_dir_canonical = PRECOMPUTED_DIR / stable_doc_id / f"{stable_doc_id}.json"
             pre_dir_enhanced = PRECOMPUTED_DIR / stable_doc_id / f"{stable_doc_id}_enhanced.json"
             pre_dir_index = PRECOMPUTED_DIR / stable_doc_id / f"{stable_doc_id}_index.json"
             chosen = None
-            if pre_dir_canonical.exists():
+            if pre_dir_flat.exists():
+                chosen = pre_dir_flat
+            elif pre_dir_canonical.exists():
                 chosen = pre_dir_canonical
             elif pre_dir_enhanced.exists():
                 chosen = pre_dir_enhanced
@@ -520,11 +542,14 @@ async def get_ontology(document_id: str):
     if cached is not None:
         return cached
     # Look in precomputed dir (canonical first, then legacy)
+    pre_dir_flat = PRECOMPUTED_DIR / f"{document_id}.json"
     pre_dir_canonical = PRECOMPUTED_DIR / document_id / f"{document_id}.json"
     pre_dir_enhanced = PRECOMPUTED_DIR / document_id / f"{document_id}_enhanced.json"
     pre_dir_index = PRECOMPUTED_DIR / document_id / f"{document_id}_index.json"
     chosen = None
-    if pre_dir_canonical.exists():
+    if pre_dir_flat.exists():
+        chosen = pre_dir_flat
+    elif pre_dir_canonical.exists():
         chosen = pre_dir_canonical
     elif pre_dir_enhanced.exists():
         chosen = pre_dir_enhanced
