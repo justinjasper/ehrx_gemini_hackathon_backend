@@ -53,6 +53,9 @@ temp/
 
 # Large data files (mount as volumes instead)
 # (Allow SampleEHR_docs + included PDFs so they can be bundled)
+# Explicitly include SampleEHR_docs (exclusions below won't apply)
+!SampleEHR_docs/
+!SampleEHR_docs/**/*.pdf
 
 # Sensitive files
 .env
