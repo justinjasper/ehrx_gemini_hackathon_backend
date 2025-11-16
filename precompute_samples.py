@@ -17,7 +17,15 @@ from ehrx.vlm.pipeline import DocumentPipeline
 from ehrx.vlm.grouping import SubDocumentGrouper, generate_hierarchical_index
 from ehrx.vlm.config import VLMConfig
 
-ROOT = Path(__file__).resolve().parents[1]
+# Resolve project root robustly whether this script lives at repo root or under scripts/
+_here = Path(__file__).resolve()
+_candidates = [
+    _here.parent,                  # repo root if script is at root
+    _here.parent.parent,           # repo root if script is under scripts/
+    Path.cwd(),                    # current working directory
+]
+ROOT = next((c for c in _candidates if (c / "SampleEHR_docs").exists()), _here.parent)
+
 SAMPLES_DIR = (ROOT / "SampleEHR_docs").resolve()
 OUT_DIR = (ROOT / "precomputed_samples").resolve()
 OUT_DIR.mkdir(parents=True, exist_ok=True)
