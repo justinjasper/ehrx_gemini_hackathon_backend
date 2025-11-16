@@ -73,7 +73,7 @@ SAMPLE_DOCS_DIR = Path(os.getenv("SAMPLE_DOCS_DIR", "./SampleEHR_docs")).resolve
 SAMPLE_DOCS_DIR.mkdir(parents=True, exist_ok=True)
 
 # Precompute controls
-PRECOMPUTE_SAMPLES = os.getenv("PRECOMPUTE_SAMPLES", "true").lower() in {"1", "true", "yes", "y"}
+PRECOMPUTE_SAMPLES = os.getenv("PRECOMPUTE_SAMPLES", "false").lower() in {"1", "true", "yes", "y"}
 
 # In-memory caches for precomputed samples
 # filename -> stable document_id
@@ -225,9 +225,19 @@ def precompute_sample_documents() -> None:
         except Exception as e:
             logger.error(f"Failed to precompute {entry.name}: {e}", exc_info=True)
 
-# Run precompute at startup if enabled
-if PRECOMPUTE_SAMPLES:
-    precompute_sample_documents()
+async def precompute_samples_background() -> None:
+    """Run precompute in a background thread to avoid blocking startup."""
+    await asyncio.to_thread(precompute_sample_documents)
+
+@app.on_event("startup")
+async def on_startup():
+    # Schedule precompute in the background if enabled (non-blocking)
+    if PRECOMPUTE_SAMPLES:
+        try:
+            asyncio.create_task(precompute_samples_background())
+            logger.info("Scheduled background precompute for sample documents")
+        except Exception as e:
+            logger.warning(f"Failed to schedule background precompute: {e}")
 
 
 @app.get("/")
