@@ -155,7 +155,8 @@ def _process_pdf_file(
     document_id_override: Optional[str] = None
 ) -> dict:
     """Shared PDF processing routine."""
-    document_id = document_id_override or f"{Path(original_filename).stem}_{int(datetime.utcnow().timestamp())}"
+    # Document ID should be just the base filename without extension, no numbers appended
+    document_id = document_id_override or Path(original_filename).stem
     doc_paths = _get_document_paths(document_id)
     doc_paths["dir"].mkdir(parents=True, exist_ok=True)
 
