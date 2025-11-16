@@ -11,6 +11,7 @@ import os
 import json
 import logging
 import tempfile
+import re
 from pathlib import Path
 from typing import Optional
 from datetime import datetime
@@ -156,7 +157,12 @@ def _process_pdf_file(
 ) -> dict:
     """Shared PDF processing routine."""
     # Document ID should be just the base filename without extension, no numbers appended
-    document_id = document_id_override or Path(original_filename).stem
+    # Also clean any _artifacts suffix or trailing _digits
+    if document_id_override:
+        document_id = document_id_override
+    else:
+        raw_stem = Path(original_filename).stem
+        document_id = _clean_document_id(raw_stem)
     doc_paths = _get_document_paths(document_id)
     doc_paths["dir"].mkdir(parents=True, exist_ok=True)
 
@@ -232,6 +238,25 @@ def precompute_sample_documents() -> None:
         except Exception as e:
             logger.error(f"Failed to precompute {entry.name}: {e}", exc_info=True)
 
+def _clean_document_id(filename_stem: str) -> str:
+    """
+    Extract clean document ID from filename stem.
+    Removes '_artifacts' suffix and any trailing underscore + numeric digits.
+    Examples:
+      'Complete History and Physical Write-Up_artifacts' -> 'Complete History and Physical Write-Up'
+      'Document_123' -> 'Document'
+      'Document_artifacts_456' -> 'Document'
+    """
+    # Remove _artifacts suffix if present
+    if filename_stem.endswith("_artifacts"):
+        filename_stem = filename_stem[:-10]  # len("_artifacts") == 10
+    
+    # Remove trailing underscore + digits pattern (e.g., "_123", "_456")
+    filename_stem = re.sub(r'_\d+$', '', filename_stem)
+    
+    return filename_stem
+
+
 def load_precomputed_cache_from_repo() -> None:
     """
     Load precomputed samples from PRECOMPUTED_DIR into memory and filename mapping.
@@ -241,27 +266,32 @@ def load_precomputed_cache_from_repo() -> None:
         precomputed_samples/<doc_id>/metadata.json
       Flat (supported):
         precomputed_samples/<doc_id>.json
+        precomputed_samples/<doc_id>_artifacts.json  (cleaned to <doc_id>)
       Legacy fallbacks:
         precomputed_samples/<doc_id>/<doc_id>_enhanced.json
         precomputed_samples/<doc_id>/<doc_id>_index.json
     """
     if not PRECOMPUTED_DIR.exists():
         return
-    # Load flat files at root: precomputed_samples/<doc_id>.json
+    # Load flat files at root: precomputed_samples/<doc_id>.json or <doc_id>_artifacts.json
     for flat_json in PRECOMPUTED_DIR.glob("*.json"):
         try:
-            doc_id = flat_json.stem
+            # Extract clean document ID (remove _artifacts suffix and trailing _digits)
+            raw_stem = flat_json.stem
+            doc_id = _clean_document_id(raw_stem)
+            
             with open(flat_json, "r") as f:
                 enhanced_json = json.load(f)
             IN_MEMORY_ONTOLOGY[doc_id] = enhanced_json
             PRECOMPUTED_DOC_IDS.add(doc_id)
-            # Assume PDF filename matches doc_id + ".pdf"
+            # Map PDF filename to document ID (PDF should match doc_id + ".pdf")
             PRECOMPUTED_SAMPLE_MAP[f"{doc_id}.pdf"] = doc_id
             # Mirror into OUTPUT_DIR for listing parity
             out_paths = _get_document_paths(doc_id)
             out_paths["dir"].mkdir(parents=True, exist_ok=True)
             with open(out_paths["enhanced"], "w") as f:
                 json.dump(enhanced_json, f, indent=2)
+            logger.info(f"Loaded precomputed: {flat_json.name} -> doc_id={doc_id}")
         except Exception as e:
             logger.warning(f"Failed loading precomputed flat file {flat_json}: {e}")
     for doc_dir in PRECOMPUTED_DIR.iterdir():
@@ -463,48 +493,28 @@ async def process_sample_document(
     document_type: str = "Clinical EHR"
 ):
     """
-    Return precomputed result for a bundled sample PDF (after simulated delay),
-    falling back to on-demand processing if not precomputed.
+    Return precomputed result for a bundled sample PDF immediately (no processing delay).
+    Uses cached JSON files from precomputed_samples/ directory.
+    Falls back to on-demand processing only if not precomputed.
     """
     sample_path = _ensure_sample_document(filename)
     logger.info(f"Requested sample processing: {sample_path}")
 
-    # Simulate ~10s processing time as requested
-    try:
-        await asyncio.sleep(10)
-    except Exception:
-        pass
-
-    stable_doc_id = PRECOMPUTED_SAMPLE_MAP.get(filename)
-    if stable_doc_id:
-        # Read total pages from memory cache if present, otherwise from disk
-        enhanced = IN_MEMORY_ONTOLOGY.get(stable_doc_id)
-        if enhanced is None:
-            # Try from precomputed dir first (canonical, then legacy)
-            pre_dir_flat = PRECOMPUTED_DIR / f"{stable_doc_id}.json"
-            pre_dir_canonical = PRECOMPUTED_DIR / stable_doc_id / f"{stable_doc_id}.json"
-            pre_dir_enhanced = PRECOMPUTED_DIR / stable_doc_id / f"{stable_doc_id}_enhanced.json"
-            pre_dir_index = PRECOMPUTED_DIR / stable_doc_id / f"{stable_doc_id}_index.json"
-            chosen = None
-            if pre_dir_flat.exists():
-                chosen = pre_dir_flat
-            elif pre_dir_canonical.exists():
-                chosen = pre_dir_canonical
-            elif pre_dir_enhanced.exists():
-                chosen = pre_dir_enhanced
-            elif pre_dir_index.exists():
-                chosen = pre_dir_index
-            if chosen and chosen.exists():
-                with open(chosen, "r") as f:
-                    enhanced = json.load(f)
-                    IN_MEMORY_ONTOLOGY[stable_doc_id] = enhanced
-            else:
-                paths = _get_document_paths(stable_doc_id)
-                if paths["enhanced"].exists():
-                    with open(paths["enhanced"], "r") as f:
-                        enhanced = json.load(f)
-                        IN_MEMORY_ONTOLOGY[stable_doc_id] = enhanced
-        total_pages = (enhanced or {}).get("total_pages") or (enhanced or {}).get("processing_stats", {}).get("total_pages")
+    # Extract clean document ID from filename (remove .pdf, _artifacts, trailing _digits)
+    raw_stem = Path(filename).stem
+    stable_doc_id = _clean_document_id(raw_stem)
+    
+    # Check if we have this in precomputed cache (by filename or by cleaned doc_id)
+    if filename in PRECOMPUTED_SAMPLE_MAP:
+        stable_doc_id = PRECOMPUTED_SAMPLE_MAP[filename]
+    elif stable_doc_id in PRECOMPUTED_DOC_IDS:
+        # Found by cleaned doc_id, update mapping
+        PRECOMPUTED_SAMPLE_MAP[filename] = stable_doc_id
+    # Check if we have precomputed data (immediate return, no delay)
+    if stable_doc_id in IN_MEMORY_ONTOLOGY:
+        enhanced = IN_MEMORY_ONTOLOGY[stable_doc_id]
+        total_pages = enhanced.get("total_pages") or enhanced.get("processing_stats", {}).get("total_pages", 0)
+        logger.info(f"Returning precomputed result immediately: {filename} -> {stable_doc_id}")
         return {
             "document_id": stable_doc_id,
             "status": "complete",
@@ -513,6 +523,42 @@ async def process_sample_document(
             "source": "sample_document_precomputed",
             "filename": filename
         }
+    
+    # Try to load from precomputed files on disk (check various naming patterns)
+    precomputed_patterns = [
+        PRECOMPUTED_DIR / f"{stable_doc_id}.json",
+        PRECOMPUTED_DIR / f"{stable_doc_id}_artifacts.json",
+        PRECOMPUTED_DIR / stable_doc_id / f"{stable_doc_id}.json",
+        PRECOMPUTED_DIR / stable_doc_id / f"{stable_doc_id}_enhanced.json",
+        PRECOMPUTED_DIR / stable_doc_id / f"{stable_doc_id}_index.json",
+    ]
+    
+    for json_path in precomputed_patterns:
+        if json_path.exists():
+            try:
+                with open(json_path, "r") as f:
+                    enhanced = json.load(f)
+                IN_MEMORY_ONTOLOGY[stable_doc_id] = enhanced
+                PRECOMPUTED_DOC_IDS.add(stable_doc_id)
+                PRECOMPUTED_SAMPLE_MAP[filename] = stable_doc_id
+                # Mirror to OUTPUT_DIR for listing
+                out_paths = _get_document_paths(stable_doc_id)
+                out_paths["dir"].mkdir(parents=True, exist_ok=True)
+                with open(out_paths["enhanced"], "w") as f:
+                    json.dump(enhanced, f, indent=2)
+                total_pages = enhanced.get("total_pages") or enhanced.get("processing_stats", {}).get("total_pages", 0)
+                logger.info(f"Loaded and returning precomputed: {filename} -> {stable_doc_id}")
+                return {
+                    "document_id": stable_doc_id,
+                    "status": "complete",
+                    "total_pages": total_pages,
+                    "enhanced_json_url": f"/documents/{stable_doc_id}/ontology",
+                    "source": "sample_document_precomputed",
+                    "filename": filename
+                }
+            except Exception as e:
+                logger.warning(f"Failed to load {json_path}: {e}")
+                continue
 
     # Fallback: process on demand and cache
     result = _process_pdf_file(
@@ -541,20 +587,19 @@ async def get_ontology(document_id: str):
     cached = IN_MEMORY_ONTOLOGY.get(document_id)
     if cached is not None:
         return cached
-    # Look in precomputed dir (canonical first, then legacy)
-    pre_dir_flat = PRECOMPUTED_DIR / f"{document_id}.json"
-    pre_dir_canonical = PRECOMPUTED_DIR / document_id / f"{document_id}.json"
-    pre_dir_enhanced = PRECOMPUTED_DIR / document_id / f"{document_id}_enhanced.json"
-    pre_dir_index = PRECOMPUTED_DIR / document_id / f"{document_id}_index.json"
+    # Look in precomputed dir (check various naming patterns including _artifacts.json)
+    precomputed_patterns = [
+        PRECOMPUTED_DIR / f"{document_id}.json",
+        PRECOMPUTED_DIR / f"{document_id}_artifacts.json",
+        PRECOMPUTED_DIR / document_id / f"{document_id}.json",
+        PRECOMPUTED_DIR / document_id / f"{document_id}_enhanced.json",
+        PRECOMPUTED_DIR / document_id / f"{document_id}_index.json",
+    ]
     chosen = None
-    if pre_dir_flat.exists():
-        chosen = pre_dir_flat
-    elif pre_dir_canonical.exists():
-        chosen = pre_dir_canonical
-    elif pre_dir_enhanced.exists():
-        chosen = pre_dir_enhanced
-    elif pre_dir_index.exists():
-        chosen = pre_dir_index
+    for pattern in precomputed_patterns:
+        if pattern.exists():
+            chosen = pattern
+            break
     if chosen and chosen.exists():
         try:
             with open(chosen, "r") as f:
