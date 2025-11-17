@@ -110,6 +110,9 @@ class VLMClient:
         # Convert image to format suitable for Vertex AI
         image_part = self._prepare_image(image)
 
+        # Store request context for potential retry with concise prompt
+        self._last_request = request
+
         # Build prompt with context
         prompt = build_element_extraction_prompt(
             context=request.context,
@@ -205,6 +208,7 @@ class VLMClient:
         prompt: str,
         max_tokens: int,
         temperature: float,
+        concise_mode: bool = False,
     ) -> str:
         """
         Call Gemini API with retry logic for transient failures.
@@ -287,12 +291,13 @@ class VLMClient:
         # Retry loop
         max_attempts = self.config.max_retries + 1 if self.config.enable_retry else 1
         last_error = None
+        last_finish_reason = None
 
         for attempt in range(max_attempts):
             try:
                 # Call Gemini API
                 logger.debug(
-                    f"Calling Gemini API (attempt {attempt + 1}/{max_attempts})"
+                    f"Calling Gemini API (attempt {attempt + 1}/{max_attempts}, concise_mode={concise_mode})"
                 )
 
                 response = self._model.generate_content(
@@ -314,13 +319,35 @@ class VLMClient:
                 else:
                     finish_reason_str = str(finish_reason)
 
+                last_finish_reason = finish_reason_str
+
                 if "MAX_TOKENS" in finish_reason_str or "LENGTH" in finish_reason_str:
-                    logger.warning(
-                        f"Response truncated due to token limit (finish_reason: {finish_reason_str}). "
-                        f"Consider increasing max_tokens or requesting more concise output."
-                    )
-                    # Don't fail - attempt to parse what we got, but it will likely fail
-                    # Better: In future, we should retry with instructions to be more concise
+                    if not concise_mode and hasattr(self, '_last_request'):
+                        # First time hitting MAX_TOKENS - retry with concise prompt
+                        logger.warning(
+                            f"Response truncated due to token limit (finish_reason: {finish_reason_str}). "
+                            f"Retrying with concise mode..."
+                        )
+                        # Build concise prompt and retry
+                        from ehrx.vlm.prompts import build_element_extraction_prompt_concise
+                        concise_prompt = build_element_extraction_prompt_concise(
+                            context=self._last_request.context
+                        )
+                        # Retry with concise prompt (recursive call)
+                        return self._generate_with_retry(
+                            image_part=image_part,
+                            prompt=concise_prompt,
+                            max_tokens=max_tokens,
+                            temperature=temperature,
+                            concise_mode=True
+                        )
+                    else:
+                        # Already in concise mode and still hitting limit - log and try to parse partial
+                        logger.error(
+                            f"Response still truncated in concise mode (finish_reason: {finish_reason_str}). "
+                            f"Attempting to parse partial response. Consider page splitting for very dense pages."
+                        )
+                        # Continue to try parsing - might get partial results
 
                 # Track usage
                 self._request_count += 1
@@ -385,21 +412,38 @@ class VLMClient:
             response_data = json.loads(response_text)
             logger.debug(f"Successfully parsed structured JSON response with {len(response_data.get('elements', []))} elements")
         except json.JSONDecodeError as e:
-            # This should rarely happen with structured output, but handle gracefully
+            # This can happen with truncated responses (MAX_TOKENS)
             logger.error(f"JSON parse failed despite structured output: {e}")
+            
+            # Try to extract partial elements from truncated JSON
+            partial_elements = self._extract_partial_elements(response_text, e)
+            
+            if partial_elements:
+                logger.warning(
+                    f"Extracted {len(partial_elements)} partial elements from truncated response. "
+                    f"Some content may be missing due to token limit."
+                )
+                # Create response with partial elements
+                response_data = {
+                    "elements": partial_elements,
+                    "requires_human_review": True,
+                    "review_reasons": [
+                        "Response truncated due to MAX_TOKENS - partial extraction only"
+                    ]
+                }
+            else:
+                # Save for debugging if we can't extract anything
+                if self.config.save_raw_responses:
+                    debug_path = Path(self.config.raw_responses_dir or "./debug")
+                    debug_path.mkdir(parents=True, exist_ok=True)
+                    error_file = debug_path / f"error_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}.txt"
+                    with open(error_file, 'w') as f:
+                        f.write(f"JSON Parse Error: {e}\n\n")
+                        f.write("=== RAW RESPONSE ===\n")
+                        f.write(raw_response)
+                    logger.error(f"Saved problematic response to {error_file}")
 
-            # Save for debugging
-            if self.config.save_raw_responses:
-                debug_path = Path(self.config.raw_responses_dir or "./debug")
-                debug_path.mkdir(parents=True, exist_ok=True)
-                error_file = debug_path / f"error_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}.txt"
-                with open(error_file, 'w') as f:
-                    f.write(f"JSON Parse Error: {e}\n\n")
-                    f.write("=== RAW RESPONSE ===\n")
-                    f.write(raw_response)
-                logger.error(f"Saved problematic response to {error_file}")
-
-            raise ValueError(f"Invalid JSON response: {e}") from e
+                raise ValueError(f"Invalid JSON response: {e}") from e
 
         # Extract elements
         elements = []
@@ -446,6 +490,96 @@ class VLMClient:
             review_reasons=review_reasons,
             raw_response=raw_response if self.config.save_raw_responses else None,
         )
+
+    def _extract_partial_elements(
+        self,
+        response_text: str,
+        json_error: json.JSONDecodeError
+    ) -> List[Dict[str, Any]]:
+        """
+        Attempt to extract partial elements from truncated JSON response.
+        
+        Args:
+            response_text: Raw response text (may be truncated)
+            json_error: The JSON decode error that occurred
+            
+        Returns:
+            List of partial element dictionaries, or empty list if extraction fails
+        """
+        try:
+            # Try to find the "elements" array in the response
+            elements_start = response_text.find('"elements"')
+            if elements_start == -1:
+                elements_start = response_text.find("'elements'")
+            
+            if elements_start == -1:
+                return []
+            
+            # Find the opening bracket of the elements array
+            bracket_start = response_text.find('[', elements_start)
+            if bracket_start == -1:
+                return []
+            
+            # Extract the elements array portion (up to error position or end)
+            error_pos = min(json_error.pos, len(response_text))
+            partial_text = response_text[bracket_start:error_pos]
+            
+            # Try to find complete element objects by tracking brace depth
+            elements = []
+            current_pos = 1  # Skip opening bracket
+            brace_count = 0
+            element_start = None
+            in_string = False
+            escape_next = False
+            
+            while current_pos < len(partial_text):
+                char = partial_text[current_pos]
+                
+                # Handle string escaping
+                if escape_next:
+                    escape_next = False
+                    current_pos += 1
+                    continue
+                
+                if char == '\\':
+                    escape_next = True
+                    current_pos += 1
+                    continue
+                
+                if char == '"' and not escape_next:
+                    in_string = not in_string
+                    current_pos += 1
+                    continue
+                
+                if in_string:
+                    current_pos += 1
+                    continue
+                
+                # Track braces outside strings
+                if char == '{':
+                    if brace_count == 0:
+                        element_start = current_pos
+                    brace_count += 1
+                elif char == '}':
+                    brace_count -= 1
+                    if brace_count == 0 and element_start is not None:
+                        # Found a complete element object
+                        element_text = partial_text[element_start:current_pos + 1]
+                        try:
+                            element_data = json.loads(element_text)
+                            elements.append(element_data)
+                        except json.JSONDecodeError:
+                            # Skip this element if it's not valid JSON
+                            pass
+                        element_start = None
+                
+                current_pos += 1
+            
+            return elements
+            
+        except Exception as e:
+            logger.debug(f"Failed to extract partial elements: {e}")
+            return []
 
     def _parse_element(
         self,

@@ -221,6 +221,89 @@ Now analyze the provided page image and return the JSON response."""
     return prompt
 
 
+def build_element_extraction_prompt_concise(
+    context: DocumentContext,
+    additional_instructions: Optional[str] = None
+) -> str:
+    """
+    Build a concise version of the element extraction prompt for pages with very dense content.
+    
+    This version requests shorter content summaries and prioritizes structure over full text
+    to avoid hitting MAX_TOKENS limits.
+    
+    Args:
+        context: Document context (page info, section hierarchy, etc.)
+        additional_instructions: Optional additional guidance for VLM
+    
+    Returns:
+        Formatted concise prompt string for VLM
+    """
+    # Build context section (same as regular prompt)
+    context_lines = [
+        "## Document Context",
+        f"- **Page**: {context.page_number + 1} of {context.total_pages}",
+    ]
+
+    if context.document_type:
+        context_lines.append(f"- **Document Type**: {context.document_type}")
+
+    if context.section_hierarchy:
+        hierarchy_str = " → ".join(context.section_hierarchy)
+        context_lines.append(f"- **Section Path**: {hierarchy_str}")
+
+    context_section = "\n".join(context_lines)
+
+    # Build concise prompt - prioritize structure and key information
+    prompt = f"""{context_section}
+
+## Task (CONCISE MODE - Dense Page)
+
+This page has very dense content. Extract ALL elements but use CONCISE text extraction to stay within token limits.
+
+**CRITICAL INSTRUCTIONS FOR CONCISE MODE:**
+1. **Extract ALL elements** - don't skip any
+2. **Use shorter content** - summarize long paragraphs, extract key points from tables
+3. **Prioritize structure** - bounding boxes and types are more important than full text
+4. **For tables**: Extract column headers and first 2-3 rows only (indicate total row count)
+5. **For paragraphs**: Extract first 100-150 characters + key medical terms
+6. **For lists**: Extract first 3-5 items only (indicate total item count)
+
+For each element, provide:
+
+1. **Bounding Box**: Precise pixel coordinates [x0, y0, x1, y1] (same as normal mode)
+
+2. **Semantic Type**: Same classification as normal mode
+
+3. **Text Content** (CONCISE):
+   - **Clinical content**: Extract key information only (medication names, dosages, lab values, vital signs)
+   - **Tables**: Header row + first 2-3 data rows + note like "[... 15 more rows]"
+   - **Paragraphs**: First 100-150 chars + key medical terms + note like "[... truncated]"
+   - **Lists**: First 3-5 items + note like "[... 12 more items]"
+   - **Administrative**: Brief summary only
+
+4. **Confidence Scores**: Same as normal mode
+
+5. **Clinical Metadata**: Same as normal mode
+
+## Output Format
+
+Same JSON structure as normal mode, but with concise content fields.
+
+## Important Guidelines
+
+1. **Completeness**: Extract EVERY element (don't skip due to conciseness)
+2. **Key Information First**: Prioritize critical clinical data (medications, labs, vitals, diagnoses)
+3. **Structure Over Detail**: Accurate bounding boxes and types are more important than full text
+4. **Indicate Truncation**: Use "[... X more rows/items]" notation when content is truncated
+5. **Preserve Critical Values**: Always extract dosages, lab values, vital signs completely even if other text is summarized
+
+{additional_instructions if additional_instructions else ""}
+
+Now analyze the provided page image and return the JSON response with CONCISE content."""
+
+    return prompt
+
+
 def build_table_extraction_prompt(table_bbox: Optional[Dict[str, float]] = None) -> str:
     """
     Build specialized prompt for table structure extraction.
