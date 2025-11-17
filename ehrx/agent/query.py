@@ -8,7 +8,6 @@ Two-stage process:
 
 import json
 import logging
-import time
 from typing import Dict, Any, List, Optional
 from pathlib import Path
 
@@ -251,12 +250,11 @@ Only return the JSON object, nothing else."""
             except (json.JSONDecodeError, ValueError) as e:
                 last_error = e
                 if attempt < max_retries:
-                    wait_time = min(2 ** attempt, 10)  # Exponential backoff, max 10 seconds
                     self.logger.warning(
                         f"JSON parsing error in Flash response (attempt {attempt}/{max_retries}): {e}. "
-                        f"Retrying in {wait_time}s..."
+                        f"Retrying immediately..."
                     )
-                    time.sleep(wait_time)
+                    # No delay - retry immediately since errors are due to LLM output format, not transient issues
                 else:
                     self.logger.error(
                         f"JSON parsing failed after {max_retries} attempts: {e}"
@@ -475,12 +473,11 @@ Only return the JSON object, nothing else."""
             except (json.JSONDecodeError, ValueError) as e:
                 last_error = e
                 if attempt < max_retries:
-                    wait_time = min(2 ** attempt, 10)  # Exponential backoff, max 10 seconds
                     self.logger.warning(
                         f"JSON parsing error in Pro response (attempt {attempt}/{max_retries}): {e}. "
-                        f"Retrying in {wait_time}s..."
+                        f"Retrying immediately..."
                     )
-                    time.sleep(wait_time)
+                    # No delay - retry immediately since errors are due to LLM output format, not transient issues
                 else:
                     self.logger.error(
                         f"JSON parsing failed after {max_retries} attempts: {e}"
