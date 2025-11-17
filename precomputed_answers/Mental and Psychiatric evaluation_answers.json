@@ -1,0 +1,301 @@
+{
+  "document_id": "Mental and Psychiatric evaluation",
+  "source_json": "Mental and Psychiatric evaluation_artifacts.json",
+  "total_questions": 4,
+  "questions": [
+    {
+      "question_id": "q1",
+      "question": "What is the primary psychiatric concern being evaluated?",
+      "answer": {
+        "answer_summary": "The primary psychiatric concern being evaluated is the patient's mental capacity. This assessment is being conducted because the patient has a diagnosis of Dementia, which has resulted in an impairment of the functioning of his mind and brain, affecting his cognitive abilities and decision-making skills.",
+        "reasoning": "The documents explicitly state that the purpose of the evaluation is a 'mental capacity assessment'. The primary diagnosis listed is 'Dementia', and the report details how the patient's dementia and stroke have impaired the functioning of his mind and brain, affecting his ability to make decisions. The entire report is structured around assessing the patient's mental capacity in light of this diagnosis.",
+        "matched_elements": [
+          {
+            "element_id": "E_0003",
+            "type": "clinical_paragraph",
+            "content": "Please state if you have been seeing the patient regularly over a period of time (if so,\nplease state when you first started seeing the patient and how often you see the\npatient) or if you saw the patient specifically for this mental capacity assessment only.",
+            "page_number": 2,
+            "bbox_pixel": [
+              175.0,
+              96.0,
+              879.0,
+              150.0
+            ],
+            "bbox_pdf": [
+              63.00000025831082,
+              787.6799931456841,
+              316.44000129745837,
+              807.119992976519
+            ],
+            "relevance": "This element explicitly states that the purpose of the visit is a 'mental capacity assessment'."
+          },
+          {
+            "element_id": "E_0012",
+            "type": "clinical_paragraph",
+            "content": "After that, Mr Tan was referred to Blackacre Hospital for follow-up treatment from in\nNovember 2010. The clinical impression was that he was manifesting behavioural and\npsychological symptoms secondary to Dementia.",
+            "page_number": 2,
+            "bbox_pixel": [
+              175.0,
+              863.0,
+              879.0,
+              919.0
+            ],
+            "bbox_pdf": [
+              63.00000025831082,
+              510.8399955547192,
+              316.44000129745837,
+              530.9999953792889
+            ],
+            "relevance": "This element provides the clinical impression of 'Dementia' as the cause of the patient's symptoms."
+          },
+          {
+            "element_id": "E_0003",
+            "type": "problem_list",
+            "content": "1. Dementia",
+            "page_number": 5,
+            "bbox_pixel": [
+              213.0,
+              92.0,
+              317.0,
+              106.0
+            ],
+            "bbox_pdf": [
+              76.68000031440117,
+              803.5199930078459,
+              114.12000046791161,
+              808.5599929639883
+            ],
+            "relevance": "This element lists 'Dementia' as the primary diagnosis."
+          },
+          {
+            "element_id": "E_0005",
+            "type": "section_header",
+            "content": "SECTION 4: OPINION ON PATIENT'S MENTAL CAPACITY",
+            "page_number": 5,
+            "bbox_pixel": [
+              175.0,
+              657.0,
+              718.0,
+              670.0
+            ],
+            "bbox_pdf": [
+              63.00000025831082,
+              600.4799947746806,
+              258.4800010598124,
+              605.1599947339556
+            ],
+            "relevance": "This section header confirms that the core of the report is the opinion on the patient's mental capacity."
+          },
+          {
+            "element_id": "E_0003",
+            "type": "clinical_paragraph",
+            "content": "Mr Tan's dementia and stroke have impaired the functioning of his mind and brain. His failure to remember where he was (i.e. in the hospital) and the day and date, despite being told a short while ago, shows his inability to retain information. He was also not able to remember basic information such as his age, and the address where he lives.",
+            "page_number": 7,
+            "bbox_pixel": [
+              179.0,
+              118.0,
+              879.0,
+              210.0
+            ],
+            "bbox_pdf": [
+              64.44000026421507,
+              766.0799933336452,
+              316.44000129745837,
+              799.1999930454382
+            ],
+            "relevance": "This element explains how the patient's dementia has impaired the functioning of his mind and brain, which is the basis for the mental capacity assessment."
+          }
+        ],
+        "filter_stats": {
+          "original_elements": 131,
+          "filtered_elements": 88,
+          "reduction_ratio": "1.5x"
+        }
+      }
+    },
+    {
+      "question_id": "q2",
+      "question": "What is the patient's mental status examination findings?",
+      "answer": {
+        "answer_summary": "The mental status examination was conducted on 20 June 2015. The findings are as follows:\n\n- **Mood and Affect:** Mood was euthymic (normal), and he had no psychotic symptoms.\n\n- **Orientation:**\n  - **Person:** Oriented to self and his son. Identified the examiner as a doctor only after being prompted.\n  - **Place:** Disoriented. Unable to identify he was in a hospital clinic and forgot moments after being told. Stated his flat was in Bedok when it is in Jurong.\n  - **Time:** Disoriented. Stated the date was 10 February (actual: 20 June), the day was Wednesday (actual: Monday), and the time was 5pm (actual: 3pm). He could not state the year and was unable to tell time from a watch.\n\n- **Memory:**\n  - Could not remember the doctor's name despite a 5-year history.\n  - Demonstrated poor short-term retention, forgetting the location and date moments after being told.\n\n- **Cognition and Fund of Knowledge:**\n  - **Basic Information:** Stated his age as 50 (actual: 55), could not recall his birthday, and incorrectly named the Prime Minister.\n  - **Arithmetic:** Unable to perform simple calculations (4+3=8, could not subtract 7 from 10) and could not count backwards from 20 to 1.\n  - **Financial:** Unable to recognize currency correctly (identified a 50-cent coin as 20 cents and a $10 note as $2).\n\n- **Insight:** Poor insight into his medical condition. He did not know his medical problems, the reason for prior hospitalization, or if he was taking any medication.",
+        "reasoning": "The patient's mental status examination findings are detailed across pages 3 and 4 of the document, under the section 'Findings from physical examination / mental state examination'. The findings cover mood, orientation, memory, basic information recall, arithmetic skills, financial knowledge, and insight into his own health.",
+        "matched_elements": [
+          {
+            "element_id": "E_0005",
+            "type": "section_header",
+            "content": "Findings from physical examination / mental state examination:",
+            "page_number": 3,
+            "relevance": "This is the main section header for the mental state examination findings."
+          },
+          {
+            "element_id": "E_0007",
+            "type": "clinical_paragraph",
+            "content": "Mr Tan was brought to the clinic in a wheel chair. His mood was euthymic (i.e. normal, non-depressed and reasonably positive mood) and he did not have any psychotic symptoms.",
+            "page_number": 3,
+            "relevance": "Describes the patient's mood and lack of psychotic symptoms."
+          },
+          {
+            "element_id": "E_0009",
+            "type": "clinical_paragraph",
+            "content": "With regard to his orientation to time, place and person, he was unable to tell that he was in a hospital clinic but identified his son and was able to tell his own name and the name of his son. After being told he was in a hospital clinic, he identified me as a doctor, when asked. However, he could not remember my name, although I have been treating him for the last 5 years. He was able to tell correctly how he arrived at the clinic. However, when asked some moments later where he was, he said he did not know.",
+            "page_number": 3,
+            "relevance": "Details the patient's orientation to person and place, and short-term memory deficits."
+          },
+          {
+            "element_id": "E_0010",
+            "type": "clinical_paragraph",
+            "content": "He said that it was 10 February (actual date 20 June) and it was a Wednesday (actual day, Monday). He appeared to be just guessing as to what date and day it was. After being told what the day and date were, he forgot a few moments later after being asked again. He could not answer when asked what year it was.",
+            "page_number": 3,
+            "relevance": "Details the patient's disorientation to time (date, day, year) and short-term memory deficits."
+          },
+          {
+            "element_id": "E_0011",
+            "type": "clinical_paragraph",
+            "content": "When asked what time it was, he said that it was 5pm in the afternoon (actual time, 3pm). He was not able to tell the time from looking at a watch.",
+            "page_number": 3,
+            "relevance": "Details the patient's disorientation to time and inability to read a watch."
+          },
+          {
+            "element_id": "E_0013",
+            "type": "clinical_paragraph",
+            "content": "He gave his age as 50 years old (actually 55 years) and could not answer when asked when his birthday was. He correctly said he lived in a flat with his son, but could not give the correct address, and also got the area wrong (he said the flat was in Bedok, when it was actually in Jurong.) He incorrectly stated that the Prime Minister was Lee Kuan Yew.",
+            "page_number": 3,
+            "relevance": "Details deficits in recalling basic personal and general information."
+          },
+          {
+            "element_id": "E_0003",
+            "type": "clinical_paragraph",
+            "content": "Mr Tan was unable to perform simple arithmetic such as 4 plus 3, giving 8 as the answer, and could not subtract 7 from 10. He could not count backwards from 20 to 1. He was unable to recognise notes or coins (he identified a 50-cent coin as 20 cents and a 10-dollar note as 2 dollars).",
+            "page_number": 4,
+            "relevance": "Details the patient's inability to perform simple arithmetic and recognize currency."
+          },
+          {
+            "element_id": "E_0006",
+            "type": "clinical_paragraph",
+            "content": "I asked him whether he knew what medical problems he had. Mr Tan just stared at me blankly and shook his head. I asked him whether he remembered being in hospital before. Mr Tan nodded. I asked him if he knew what he was in hospital for. Mr Tan shook his head. I asked him if he was taking any medicine at the moment. Mr Tan just looked at me blankly and did not reply.",
+            "page_number": 4,
+            "relevance": "Details the patient's lack of insight into his own medical history and treatment."
+          },
+          {
+            "element_id": "E_0007",
+            "type": "subsection_header",
+            "content": "Date of physical examination/mental state examination: 20 June 2015",
+            "page_number": 4,
+            "relevance": "Provides the date the mental state examination was conducted."
+          }
+        ],
+        "filter_stats": {
+          "original_elements": 131,
+          "filtered_elements": 86,
+          "reduction_ratio": "1.5x"
+        }
+      }
+    },
+    {
+      "question_id": "q3",
+      "question": "What medications is the patient currently taking for mental health?",
+      "answer": {
+        "answer_summary": "The patient's current medications for mental health are not mentioned in the provided record. The document states that the patient was unable to answer when asked if he was taking any medication.",
+        "reasoning": "The provided medical record does not contain a list of the patient's current medications. Instead, it explicitly states on two separate occasions that the patient was unable to answer when asked about his medications. Element E_0006 on page 4 describes the direct interaction where the patient did not reply when asked about his medicine. Element E_0006 on page 7 reiterates this in the doctor's summary, stating the patient was 'not able to answer a question as to whether he is currently on medication.'",
+        "matched_elements": [
+          {
+            "element_id": "E_0006",
+            "type": "clinical_paragraph",
+            "content": "I asked him whether he knew what medical problems he had. Mr Tan just stared at me blankly and shook his head. I asked him whether he remembered being in hospital before. Mr Tan nodded. I asked him if he knew what he was in hospital for. Mr Tan shook his head. I asked him if he was taking any medicine at the moment. Mr Tan just looked at me blankly and did not reply.",
+            "page_number": 4,
+            "bbox_pixel": [
+              176.0,
+              472.0,
+              880.0,
+              560.0
+            ],
+            "bbox_pdf": [
+              63.36000025978689,
+              640.0799944300852,
+              316.80000129893443,
+              671.7599941544088
+            ],
+            "relevance": "This element explicitly states that when the patient was asked if he was taking any medicine, he did not reply."
+          },
+          {
+            "element_id": "E_0006",
+            "type": "clinical_paragraph",
+            "content": "Since he is unable to understand, retain, use or weigh simple information, due to his memory deficits and cognitive failures, he will not be able to make decisions about his personal and financial affairs, which would require being able to process such information. This is also demonstrated by his inability to remember basic information on the property he owns with his elderly mother, and also his inability to make a realistic and concrete plan for what to do with the property. He was also not able to remember what medical problems he has, and not able to answer a question as to whether he is currently on medication.",
+            "page_number": 7,
+            "bbox_pixel": [
+              179.0,
+              356.0,
+              879.0,
+              499.0
+            ],
+            "bbox_pdf": [
+              64.44000026421507,
+              662.0399942389913,
+              316.44000129745837,
+              713.5199937910173
+            ],
+            "relevance": "This element summarizes the doctor's opinion, noting the patient's inability to answer a question about his current medication."
+          }
+        ],
+        "filter_stats": {
+          "original_elements": 131,
+          "filtered_elements": 88,
+          "reduction_ratio": "1.5x"
+        }
+      }
+    },
+    {
+      "question_id": "q4",
+      "question": "What recommendations or treatment plan is suggested?",
+      "answer": {
+        "answer_summary": "No specific medical treatment plan is recommended. The doctor's opinion is that the patient's cognitive functions are unlikely to improve and will most likely worsen over time, as there is no treatment that can reverse his dementia. The report establishes that the patient is unable to make decisions about his personal and financial affairs, implying a need for these to be managed by a deputy.",
+        "reasoning": "The EHR does not contain a specific medical treatment plan with medications or therapies. Instead, it provides a prognosis and an opinion on the patient's mental capacity, which forms the basis for the recommended course of action. The key element states that there is no treatment to reverse the patient's dementia and that his cognitive functions are expected to worsen. The implied recommendation, based on the entire report's context of assessing mental capacity, is the management of his personal and financial affairs by another party, as he is deemed unable to make these decisions himself.",
+        "matched_elements": [
+          {
+            "element_id": "E_0007",
+            "type": "clinical_paragraph",
+            "content": "In my view, his cognitive functions are unlikely to improve and would most likely get worse over time, as there is no treatment which can reverse his dementia.",
+            "page_number": 7,
+            "bbox_pixel": [
+              179.0,
+              523.0,
+              879.0,
+              560.0
+            ],
+            "bbox_pdf": [
+              64.44000026421507,
+              640.0799944300852,
+              316.44000129745837,
+              653.3999943141757
+            ],
+            "relevance": "This element explicitly states the prognosis and the lack of a curative treatment for the patient's dementia."
+          },
+          {
+            "element_id": "E_0006",
+            "type": "clinical_paragraph",
+            "content": "Since he is unable to understand, retain, use or weigh simple information, due to his memory deficits and cognitive failures, he will not be able to make decisions about his personal and financial affairs, which would require being able to process such information. This is also demonstrated by his inability to remember basic information on the property he owns with his elderly mother, and also his inability to make a realistic and concrete plan for what to do with the property. He was also not able to remember what medical problems he has, and not able to answer a question as to whether he is currently on medication.",
+            "page_number": 7,
+            "bbox_pixel": [
+              179.0,
+              356.0,
+              879.0,
+              499.0
+            ],
+            "bbox_pdf": [
+              64.44000026421507,
+              662.0399942389913,
+              316.44000129745837,
+              713.5199937910173
+            ],
+            "relevance": "This paragraph implies a recommendation for managing the patient's affairs due to his inability to make decisions, which is a key part of the plan of care for a patient who lacks mental capacity."
+          }
+        ],
+        "filter_stats": {
+          "original_elements": 131,
+          "filtered_elements": 86,
+          "reduction_ratio": "1.5x"
+        }
+      }
+    }
+  ]
+}

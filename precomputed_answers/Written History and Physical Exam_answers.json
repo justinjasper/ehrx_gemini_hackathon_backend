@@ -1,0 +1,678 @@
+{
+  "document_id": "Written History and Physical Exam",
+  "source_json": "Written History and Physical Exam_artifacts.json",
+  "total_questions": 8,
+  "questions": [
+    {
+      "question_id": "q1",
+      "question": "What are the patient's vital signs at presentation?",
+      "answer": {
+        "answer_summary": "The patient's vital signs at presentation were:\n- Blood Pressure: 168/98\n- Pulse: 90\n- Respirations: 20\n- Temperature: 37 degrees",
+        "reasoning": "The patient's vital signs were found in a clinical paragraph directly following the 'Vital Signs' subsection header within the 'Physical Examination' section of the record. The paragraph lists the blood pressure, pulse, respirations, and temperature.",
+        "matched_elements": [
+          {
+            "element_id": "E_0002",
+            "type": "subsection_header",
+            "content": "Vital Signs:",
+            "page_number": 3,
+            "bbox_pixel": [
+              56.0,
+              118.0,
+              149.0,
+              131.0
+            ],
+            "bbox_pdf": [
+              20.16,
+              744.84,
+              53.64,
+              749.52
+            ],
+            "relevance": "This element is the header for the vital signs section, providing context for the subsequent data."
+          },
+          {
+            "element_id": "E_0003",
+            "type": "clinical_paragraph",
+            "content": "Blood Pressure 168/98, Pulse 90, Respirations 20,\nTemperature 37 degrees.",
+            "page_number": 3,
+            "bbox_pixel": [
+              56.0,
+              136.0,
+              387.0,
+              160.0
+            ],
+            "bbox_pdf": [
+              20.16,
+              734.4,
+              139.32,
+              743.04
+            ],
+            "relevance": "This element explicitly lists the patient's vital signs at presentation."
+          }
+        ],
+        "filter_stats": {
+          "original_elements": 65,
+          "filtered_elements": 51,
+          "reduction_ratio": "1.3x"
+        }
+      }
+    },
+    {
+      "question_id": "q2",
+      "question": "What is the patient's chief complaint or primary symptom?",
+      "answer": {
+        "answer_summary": "The patient's chief complaint is chest pain. It is described as a dull, aching, exertion-related substernal chest pain. Dyspnea is also noted as a secondary symptom.",
+        "reasoning": "The patient's chief complaint was identified from the 'Initial Problem List' and 'Revised Problem List' on page 4, where 'Chest Pain' is listed as the first item. This is further confirmed in the 'Assessment and Differential Diagnosis' section on page 5, which begins by addressing 'Chest pain with features of angina pectoris' and provides a detailed description of the symptom.",
+        "matched_elements": [
+          {
+            "element_id": "E_0005",
+            "type": "problem_list",
+            "content": "1. Chest Pain\n2. Dyspnea\n3. History of HTN (4 years)\n4. History of TAH/BSO\n5. History of peptic ulcer disease\n6. Penicillin allergy\n7. FH of early ASCVD\n8. Epigastric pain\n9. Low back pain\n10. Hypertension\n11. Systolic murmur\n12. Cystic changes of breasts\n13. Abdominal bruit",
+            "page_number": 4,
+            "bbox_pixel": [
+              58.0,
+              290.0,
+              348.0,
+              450.0
+            ],
+            "bbox_pdf": [
+              20.88,
+              630.0,
+              125.28,
+              687.6
+            ],
+            "relevance": "The 'Initial Problem List' identifies 'Chest Pain' as the first and primary problem."
+          },
+          {
+            "element_id": "E_0008",
+            "type": "problem_list",
+            "content": "1. Chest pain\n2. FH of early ASCVD\n3. Early surgical menopause\n4. Dyspnea\n5. Recent onset HTN\n6. Abdominal bruit\n7. Systolic ejection murmur\n8. Epigastric pain\n9. History of peptic ulcer disease\n10. Lumbosacral back pain\n11. OTC non-steroidal analgesic use\n12. Cystic changes of breasts\n13. Penicillin allergy",
+            "page_number": 4,
+            "bbox_pixel": [
+              58.0,
+              497.0,
+              362.0,
+              657.0
+            ],
+            "bbox_pdf": [
+              20.88,
+              555.48,
+              130.32,
+              613.0799999999999
+            ],
+            "relevance": "The 'Revised Problem List' confirms 'Chest pain' as the primary problem."
+          },
+          {
+            "element_id": "E_0002",
+            "type": "subsection_header",
+            "content": "1. Chest pain with features of angina pectoris",
+            "page_number": 5,
+            "bbox_pixel": [
+              56.0,
+              147.0,
+              467.0,
+              161.0
+            ],
+            "bbox_pdf": [
+              20.16,
+              734.04,
+              168.12,
+              739.08
+            ],
+            "relevance": "The first item in the 'Assessment and Differential Diagnosis' section is focused on chest pain, identifying it as the primary symptom for evaluation."
+          },
+          {
+            "element_id": "E_0003",
+            "type": "clinical_paragraph",
+            "content": "This patient's description of dull, aching, exertion related substernal chest pain is suggestive of ischemic cardiac origin. Her findings of a FH of early ASCVD, hypertension, and early surgical menopause are pertinent risk factors for development of coronary artery disease. Therefore, the combination of this patient's presentation, and the multiple risk factors make angina pectoris the most likely diagnosis. The pain symptoms appear to be increasing, and the occurrence of pain at rest suggests this fits the presentation of unstable angina, and hospitalization is indicated.",
+            "page_number": 5,
+            "bbox_pixel": [
+              56.0,
+              175.0,
+              488.0,
+              300.0
+            ],
+            "bbox_pdf": [
+              20.16,
+              684.0,
+              175.68,
+              729.0
+            ],
+            "relevance": "This paragraph provides a detailed description of the patient's primary symptom, chest pain."
+          }
+        ],
+        "filter_stats": {
+          "original_elements": 65,
+          "filtered_elements": 65,
+          "reduction_ratio": "1.0x"
+        }
+      }
+    },
+    {
+      "question_id": "q3",
+      "question": "What allergies does the patient have?",
+      "answer": {
+        "answer_summary": "The patient has a penicillin allergy.",
+        "reasoning": "The patient's allergy to penicillin was identified from the 'Initial Problem List', the 'Revised Problem List', and the 'Assessment and Differential Diagnosis' section. All three elements explicitly state 'Penicillin allergy'.",
+        "matched_elements": [
+          {
+            "element_id": "E_0005",
+            "type": "problem_list",
+            "content": "1. Chest Pain\n2. Dyspnea\n3. History of HTN (4 years)\n4. History of TAH/BSO\n5. History of peptic ulcer disease\n6. Penicillin allergy\n7. FH of early ASCVD\n8. Epigastric pain\n9. Low back pain\n10. Hypertension\n11. Systolic murmur\n12. Cystic changes of breasts\n13. Abdominal bruit",
+            "page_number": 4,
+            "bbox_pixel": [
+              58.0,
+              290.0,
+              348.0,
+              450.0
+            ],
+            "bbox_pdf": [
+              20.88,
+              630.0,
+              125.28,
+              687.6
+            ],
+            "relevance": "This initial problem list explicitly states '6. Penicillin allergy'."
+          },
+          {
+            "element_id": "E_0008",
+            "type": "problem_list",
+            "content": "1. Chest pain\n2. FH of early ASCVD\n3. Early surgical menopause\n4. Dyspnea\n5. Recent onset HTN\n6. Abdominal bruit\n7. Systolic ejection murmur\n8. Epigastric pain\n9. History of peptic ulcer disease\n10. Lumbosacral back pain\n11. OTC non-steroidal analgesic use\n12. Cystic changes of breasts\n13. Penicillin allergy",
+            "page_number": 4,
+            "bbox_pixel": [
+              58.0,
+              497.0,
+              362.0,
+              657.0
+            ],
+            "bbox_pdf": [
+              20.88,
+              555.48,
+              130.32,
+              613.0799999999999
+            ],
+            "relevance": "This revised problem list confirms the penicillin allergy, listing it as item 13."
+          },
+          {
+            "element_id": "E_0016",
+            "type": "list_items",
+            "content": "8. Penicillin allergy",
+            "page_number": 5,
+            "bbox_pixel": [
+              56.0,
+              891.0,
+              280.0,
+              905.0
+            ],
+            "bbox_pdf": [
+              20.16,
+              466.2,
+              100.8,
+              471.24
+            ],
+            "relevance": "This item in the 'Assessment and Differential Diagnosis' section lists 'Penicillin allergy' as a problem."
+          }
+        ],
+        "filter_stats": {
+          "original_elements": 65,
+          "filtered_elements": 63,
+          "reduction_ratio": "1.0x"
+        }
+      }
+    },
+    {
+      "question_id": "q4",
+      "question": "What is the patient's past medical history, including surgeries?",
+      "answer": {
+        "answer_summary": "Based on the problem lists, the patient's past medical and surgical history includes:\n\n**Medical History:**\n- History of Hypertension (HTN) for 4 years\n- History of peptic ulcer disease\n- Penicillin allergy\n- Cystic changes of breasts / Fibrocystic breast disease\n\n**Surgical History:**\n- History of Total Abdominal Hysterectomy with Bilateral Salpingo-oophorectomy (TAH/BSO), resulting in early surgical menopause.",
+        "reasoning": "The patient's past medical and surgical history was found primarily in the 'Initial Problem List' and 'Revised Problem List' on page 4. These lists explicitly state a history of hypertension (HTN), Total Abdominal Hysterectomy with Bilateral Salpingo-oophorectomy (TAH/BSO), peptic ulcer disease, and a penicillin allergy. The 'Revised Problem List' also clarifies the surgical history by noting 'Early surgical menopause'. Additional confirmation of the peptic ulcer disease and fibrocystic breast disease is found in the 'Assessment and Differential Diagnosis' section on page 5.",
+        "matched_elements": [
+          {
+            "element_id": "E_0005",
+            "type": "problem_list",
+            "content": "1. Chest Pain\n2. Dyspnea\n3. History of HTN (4 years)\n4. History of TAH/BSO\n5. History of peptic ulcer disease\n6. Penicillin allergy\n7. FH of early ASCVD\n8. Epigastric pain\n9. Low back pain\n10. Hypertension\n11. Systolic murmur\n12. Cystic changes of breasts\n13. Abdominal bruit",
+            "page_number": 4,
+            "bbox_pixel": [
+              58.0,
+              290.0,
+              348.0,
+              450.0
+            ],
+            "bbox_pdf": [
+              20.88,
+              630.0,
+              125.28,
+              687.6
+            ],
+            "relevance": "This initial problem list explicitly mentions a 'History of HTN (4 years)', 'History of TAH/BSO' (a surgery), 'History of peptic ulcer disease', and 'Penicillin allergy'."
+          },
+          {
+            "element_id": "E_0008",
+            "type": "problem_list",
+            "content": "1. Chest pain\n2. FH of early ASCVD\n3. Early surgical menopause\n4. Dyspnea\n5. Recent onset HTN\n6. Abdominal bruit\n7. Systolic ejection murmur\n8. Epigastric pain\n9. History of peptic ulcer disease\n10. Lumbosacral back pain\n11. OTC non-steroidal analgesic use\n12. Cystic changes of breasts\n13. Penicillin allergy",
+            "page_number": 4,
+            "bbox_pixel": [
+              58.0,
+              497.0,
+              362.0,
+              657.0
+            ],
+            "bbox_pdf": [
+              20.88,
+              555.48,
+              130.32,
+              613.0799999999999
+            ],
+            "relevance": "The revised problem list confirms the 'History of peptic ulcer disease', 'Penicillin allergy', and 'Recent onset HTN'. It also lists 'Early surgical menopause', which is a direct result of the TAH/BSO surgery."
+          },
+          {
+            "element_id": "E_0013",
+            "type": "list_items",
+            "content": "5. Epigastric discomfort, NSAID use with a history of peptic ulcer disease.",
+            "page_number": 5,
+            "bbox_pixel": [
+              56.0,
+              803.0,
+              488.0,
+              830.0
+            ],
+            "bbox_pdf": [
+              20.16,
+              493.2,
+              175.68,
+              502.92
+            ],
+            "relevance": "This item in the assessment confirms the 'history of peptic ulcer disease'."
+          },
+          {
+            "element_id": "E_0015",
+            "type": "list_items",
+            "content": "7. Fibrocystic breast disease",
+            "page_number": 5,
+            "bbox_pixel": [
+              56.0,
+              866.0,
+              357.0,
+              880.0
+            ],
+            "bbox_pdf": [
+              20.16,
+              475.2,
+              128.52,
+              480.24
+            ],
+            "relevance": "This item lists Fibrocystic breast disease as part of the patient's medical history."
+          }
+        ],
+        "filter_stats": {
+          "original_elements": 65,
+          "filtered_elements": 63,
+          "reduction_ratio": "1.0x"
+        }
+      }
+    },
+    {
+      "question_id": "q5",
+      "question": "What is the patient's family history relevant to cardiovascular disease?",
+      "answer": {
+        "answer_summary": "The patient has a family history (FH) of early atherosclerotic cardiovascular disease (ASCVD).",
+        "reasoning": "The patient's family history relevant to cardiovascular disease was found in the 'Assessment and Differential Diagnosis' section on page 5. A clinical paragraph discussing the patient's chest pain and risk factors explicitly mentions 'a FH of early ASCVD' (Family History of early Atherosclerotic Cardiovascular Disease).",
+        "matched_elements": [
+          {
+            "element_id": "E_0003",
+            "type": "clinical_paragraph",
+            "content": "This patient's description of dull, aching, exertion related substernal chest pain is suggestive of ischemic cardiac origin. Her findings of a FH of early ASCVD, hypertension, and early surgical menopause are pertinent risk factors for development of coronary artery disease. Therefore, the combination of this patient's presentation, and the multiple risk factors make angina pectoris the most likely diagnosis. The pain symptoms appear to be increasing, and the occurrence of pain at rest suggests this fits the presentation of unstable angina, and hospitalization is indicated.",
+            "page_number": 5,
+            "bbox_pixel": [
+              56.0,
+              175.0,
+              488.0,
+              300.0
+            ],
+            "bbox_pdf": [
+              20.16,
+              684.0,
+              175.68,
+              729.0
+            ],
+            "relevance": "This element explicitly states the patient has a family history (FH) of early ASCVD (atherosclerotic cardiovascular disease), which is mentioned as a pertinent risk factor."
+          }
+        ],
+        "filter_stats": {
+          "original_elements": 65,
+          "filtered_elements": 63,
+          "reduction_ratio": "1.0x"
+        }
+      }
+    },
+    {
+      "question_id": "q6",
+      "question": "What physical examination findings are notable?",
+      "answer": {
+        "answer_summary": "Notable physical examination findings include:\n- Vital Signs: Blood Pressure 168/98, Pulse 90, Respirations 20.\n- Neck: Jugular venous pressure is 8 cm with the patient at 45 degrees.\n- Chest: Crackles heard in the lung bases bilaterally, a grade 2/6 systolic decrescendo murmur radiating to the neck, a third heart sound at the apex, and cystic changes in the breasts bilaterally.\n- Abdomen: A bruit is heard in the right paraumbilical area, and the liver span is 8 cm by percussion.",
+        "reasoning": "The answer was compiled by reviewing the 'Physical Examination' section on page 3. I extracted all abnormal or specifically quantified findings from the subsections for Vital Signs, Neck, Chest, and Abdomen. These include the patient's blood pressure, jugular venous pressure, lung sounds, heart sounds, and an abdominal bruit.",
+        "matched_elements": [
+          {
+            "element_id": "E_0003",
+            "type": "clinical_paragraph",
+            "content": "Blood Pressure 168/98, Pulse 90, Respirations 20,\nTemperature 37 degrees.",
+            "page_number": 3,
+            "bbox_pixel": [
+              56.0,
+              136.0,
+              387.0,
+              160.0
+            ],
+            "bbox_pdf": [
+              20.16,
+              734.4,
+              139.32,
+              743.04
+            ],
+            "relevance": "This element contains the patient's vital signs, including an elevated blood pressure."
+          },
+          {
+            "element_id": "E_0019",
+            "type": "clinical_paragraph",
+            "content": "Easily moveable without resistance, no abnormal adenopathy\nin the cervical or supraclavicular areas. Trachea is midline\nand thyroid gland is normal without masses. Carotid artery\nupstroke is normal bilaterally without bruits. Jugular venous\npressure is measured as 8 cm with patient at 45 degrees.",
+            "page_number": 3,
+            "bbox_pixel": [
+              56.0,
+              515.0,
+              447.0,
+              595.0
+            ],
+            "bbox_pdf": [
+              20.16,
+              577.8,
+              160.92000000000002,
+              606.6
+            ],
+            "relevance": "This element notes the patient's jugular venous pressure, which is a notable finding."
+          },
+          {
+            "element_id": "E_0021",
+            "type": "clinical_paragraph",
+            "content": "Lungs are clear to auscultation and percussion bilaterally\nexcept for crackles heard in the lung bases bilaterally. PMI\nis in the 5th inter-costal space at the mid clavicular line. A\ngrade 2/6 systolic decrescendo murmur is heard best at the\nsecond right inter-costal space which radiates to the neck.\nA third heard sound is heard at the apex. No fourth heart\nsound or rub are heard. Cystic changes are noted in the\nbreasts bilaterally but no masses or nipple discharge is\nSeen.",
+            "page_number": 3,
+            "bbox_pixel": [
+              56.0,
+              633.0,
+              447.0,
+              787.0
+            ],
+            "bbox_pdf": [
+              20.16,
+              508.68,
+              160.92000000000002,
+              564.12
+            ],
+            "relevance": "This element details several notable findings in the chest examination, including lung crackles, a heart murmur, a third heart sound, and cystic breast changes."
+          },
+          {
+            "element_id": "E_0024",
+            "type": "clinical_paragraph",
+            "content": "The abdomen is symmetrical without distention; bowel\nsounds are normal in quality and intensity in all areas; a\nbruit is heard in the right paraumbilical area. No masses or\nsplenomegaly are noted; liver span is 8 cm by percussion.",
+            "page_number": 3,
+            "bbox_pixel": [
+              56.0,
+              825.0,
+              447.0,
+              899.0
+            ],
+            "bbox_pdf": [
+              20.16,
+              468.36,
+              160.92000000000002,
+              495.0
+            ],
+            "relevance": "This element notes a bruit heard in the right paraumbilical area during the abdominal examination."
+          }
+        ],
+        "filter_stats": {
+          "original_elements": 65,
+          "filtered_elements": 61,
+          "reduction_ratio": "1.1x"
+        }
+      }
+    },
+    {
+      "question_id": "q7",
+      "question": "What risk factors does this patient have for coronary artery disease?",
+      "answer": {
+        "answer_summary": "The patient has the following risk factors for coronary artery disease:\n- Family history (FH) of early Atherosclerotic Cardiovascular Disease (ASCVD)\n- Hypertension (HTN), with a blood pressure of 168/98\n- Early surgical menopause",
+        "reasoning": "The patient's risk factors for coronary artery disease are explicitly stated in the 'Assessment and Differential Diagnosis' section on page 5. This section identifies a family history of early ASCVD, hypertension, and early surgical menopause as pertinent risk factors. These factors are also listed in the initial and revised problem lists on page 4. The patient's blood pressure reading of 168/98 on page 3 confirms the hypertension.",
+        "matched_elements": [
+          {
+            "element_id": "E_0003",
+            "type": "clinical_paragraph",
+            "content": "This patient's description of dull, aching, exertion related substernal chest pain is suggestive of ischemic cardiac origin. Her findings of a FH of early ASCVD, hypertension, and early surgical menopause are pertinent risk factors for development of coronary artery disease. Therefore, the combination of this patient's presentation, and the multiple risk factors make angina pectoris the most likely diagnosis. The pain symptoms appear to be increasing, and the occurrence of pain at rest suggests this fits the presentation of unstable angina, and hospitalization is indicated.",
+            "page_number": 5,
+            "bbox_pixel": [
+              56.0,
+              175.0,
+              488.0,
+              300.0
+            ],
+            "bbox_pdf": [
+              20.16,
+              684.0,
+              175.68,
+              729.0
+            ],
+            "relevance": "This element explicitly lists the patient's pertinent risk factors for coronary artery disease: family history of early ASCVD, hypertension, and early surgical menopause."
+          },
+          {
+            "element_id": "E_0008",
+            "type": "problem_list",
+            "content": "1. Chest pain\n2. FH of early ASCVD\n3. Early surgical menopause\n4. Dyspnea\n5. Recent onset HTN\n6. Abdominal bruit\n7. Systolic ejection murmur\n8. Epigastric pain\n9. History of peptic ulcer disease\n10. Lumbosacral back pain\n11. OTC non-steroidal analgesic use\n12. Cystic changes of breasts\n13. Penicillin allergy",
+            "page_number": 4,
+            "bbox_pixel": [
+              58.0,
+              497.0,
+              362.0,
+              657.0
+            ],
+            "bbox_pdf": [
+              20.88,
+              555.48,
+              130.32,
+              613.0799999999999
+            ],
+            "relevance": "The revised problem list includes several risk factors for coronary artery disease, including 'FH of early ASCVD', 'Early surgical menopause', and 'Recent onset HTN'."
+          },
+          {
+            "element_id": "E_0003",
+            "type": "clinical_paragraph",
+            "content": "Blood Pressure 168/98, Pulse 90, Respirations 20,\nTemperature 37 degrees.",
+            "page_number": 3,
+            "bbox_pixel": [
+              56.0,
+              136.0,
+              387.0,
+              160.0
+            ],
+            "bbox_pdf": [
+              20.16,
+              734.4,
+              139.32,
+              743.04
+            ],
+            "relevance": "This element provides the patient's blood pressure reading of 168/98, which confirms the diagnosis of hypertension, a key risk factor for coronary artery disease."
+          },
+          {
+            "element_id": "E_0005",
+            "type": "problem_list",
+            "content": "1. Chest Pain\n2. Dyspnea\n3. History of HTN (4 years)\n4. History of TAH/BSO\n5. History of peptic ulcer disease\n6. Penicillin allergy\n7. FH of early ASCVD\n8. Epigastric pain\n9. Low back pain\n10. Hypertension\n11. Systolic murmur\n12. Cystic changes of breasts\n13. Abdominal bruit",
+            "page_number": 4,
+            "bbox_pixel": [
+              58.0,
+              290.0,
+              348.0,
+              450.0
+            ],
+            "bbox_pdf": [
+              20.88,
+              630.0,
+              125.28,
+              687.6
+            ],
+            "relevance": "The initial problem list includes 'History of HTN (4 years)', 'Hypertension', and 'FH of early ASCVD', all of which are risk factors for coronary artery disease."
+          }
+        ],
+        "filter_stats": {
+          "original_elements": 65,
+          "filtered_elements": 63,
+          "reduction_ratio": "1.0x"
+        }
+      }
+    },
+    {
+      "question_id": "q8",
+      "question": "What is the treatment plan?",
+      "answer": {
+        "answer_summary": "The treatment plan for the patient includes:\n\n*   **Admission & Monitoring:** Admit to the telemetry floor to monitor for increased chest pain.\n*   **Medications:**\n    *   Start platelet inhibitors, such as aspirin.\n    *   Start nitrates for pain and to lower blood pressure.\n    *   Morphine may be used for prolonged pain unresponsive to nitrates.\n    *   Begin diuretics for dyspnea and high blood pressure.\n    *   Potential for cholesterol-lowering medication (HMG Co-reductases) if cholesterol is elevated.\n*   **Procedures:**\n    *   Schedule a cardiac catheterization.\n    *   Perform a ventriculogram during the catheterization.\n*   **Diagnostics:**\n    *   Lab work: BUN/Creatinine, electrolytes.\n    *   Baseline EKG.\n*   **Discharge & Long-Term Plan:**\n    *   Monitor cholesterol.\n    *   Start an appropriate exercise and weight loss program.\n    *   Implement a low-fat diet.",
+        "reasoning": "The treatment plan is explicitly detailed under the 'Plan:' section on page 6 of the document. The relevant elements are the list items within this section, which outline the steps for monitoring, medication, procedures, diagnostics, and long-term care.",
+        "matched_elements": [
+          {
+            "element_id": "E_0001",
+            "type": "section_header",
+            "content": "Plan:",
+            "page_number": 6,
+            "bbox_pixel": [
+              59.0,
+              121.0,
+              95.0,
+              134.0
+            ],
+            "bbox_pdf": [
+              21.240000000000002,
+              743.76,
+              34.2,
+              748.44
+            ],
+            "relevance": "This is the header for the treatment plan section."
+          },
+          {
+            "element_id": "E_0002",
+            "type": "list_items",
+            "content": "1. Carefully monitor the patient for any increased chest pain that might be indicative of impending myocardial infarction by admitting the patient to the telemetry floor.",
+            "page_number": 6,
+            "bbox_pixel": [
+              59.0,
+              152.0,
+              489.0,
+              198.0
+            ],
+            "bbox_pdf": [
+              21.240000000000002,
+              720.72,
+              176.04000000000002,
+              737.28
+            ],
+            "relevance": "Details the plan for admission and monitoring."
+          },
+          {
+            "element_id": "E_0003",
+            "type": "list_items",
+            "content": "2. Start platelet inhibitors, such as aspirin to decrease the risk of myocardial infarction; start nitrates to decrease the risk of occlusion and to treat her symptoms of pain. For prolonged pain un- responsive to nitrates, she may need an analgesic such as morphine. The nitrates will also help to lower her BP.",
+            "page_number": 6,
+            "bbox_pixel": [
+              59.0,
+              205.0,
+              489.0,
+              320.0
+            ],
+            "bbox_pdf": [
+              21.240000000000002,
+              676.8,
+              176.04000000000002,
+              718.2
+            ],
+            "relevance": "Outlines the initial medication plan, including aspirin, nitrates, and potentially morphine."
+          },
+          {
+            "element_id": "E_0004",
+            "type": "list_items",
+            "content": "3. Patient should have her cholesterol monitored and when discharged she should be started on an appropriate exercise and weight loss program, including a low-fat diet. If her cholesterol is elevated, she may need cholesterol-lowering medication such as HMG Co-reductases.",
+            "page_number": 6,
+            "bbox_pixel": [
+              59.0,
+              327.0,
+              489.0,
+              408.0
+            ],
+            "bbox_pdf": [
+              21.240000000000002,
+              645.12,
+              176.04000000000002,
+              674.28
+            ],
+            "relevance": "Describes the long-term and discharge plan, including lifestyle changes and potential cholesterol medication."
+          },
+          {
+            "element_id": "E_0005",
+            "type": "list_items",
+            "content": "4. Schedule a cardiac catheterization since non-invasive tests have a high pretest probability for being positive and regard- less of the result, negative or positive, she will need a cath",
+            "page_number": 6,
+            "bbox_pixel": [
+              59.0,
+              415.0,
+              489.0,
+              461.0
+            ],
+            "bbox_pdf": [
+              21.240000000000002,
+              626.04,
+              176.04000000000002,
+              642.6
+            ],
+            "relevance": "Details the plan for a cardiac catheterization procedure."
+          },
+          {
+            "element_id": "E_0006",
+            "type": "list_items",
+            "content": "5. Begin diuretics for her dyspnea which is most likely secondary to volume overload - this will treat her high BP as well. She should have a ventriculogram with the cath that will assess cardiac size and presence of wall motion abnormalities.",
+            "page_number": 6,
+            "bbox_pixel": [
+              59.0,
+              468.0,
+              489.0,
+              529.0
+            ],
+            "bbox_pdf": [
+              21.240000000000002,
+              601.56,
+              176.04000000000002,
+              623.52
+            ],
+            "relevance": "Adds diuretics to the medication plan and a ventriculogram to the procedural plan."
+          },
+          {
+            "element_id": "E_0007",
+            "type": "list_items",
+            "content": "6. Appropriate lab work would include BUN/Creatinine to assess kidney function, electrolytes and baseline EKG.",
+            "page_number": 6,
+            "bbox_pixel": [
+              59.0,
+              536.0,
+              489.0,
+              565.0
+            ],
+            "bbox_pdf": [
+              21.240000000000002,
+              588.6,
+              176.04000000000002,
+              599.04
+            ],
+            "relevance": "Outlines the planned diagnostic lab work and EKG."
+          }
+        ],
+        "filter_stats": {
+          "original_elements": 65,
+          "filtered_elements": 61,
+          "reduction_ratio": "1.1x"
+        }
+      }
+    }
+  ]
+}

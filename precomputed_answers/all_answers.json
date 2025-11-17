@@ -1,0 +1,1038 @@
+{
+  "Comprehensive Adult History And Physical": {
+    "document_id": "Comprehensive Adult History And Physical",
+    "source_json": "Comprehensive Adult History And Physical_artifacts.json",
+    "total_questions": 8,
+    "questions": [
+      {
+        "question_id": "q1",
+        "question": "What is the patient's chief complaint and primary reason for presentation?",
+        "answer": {
+          "answer_summary": "The patient's chief complaint is, \"I got lightheadedness and felt too weak to walk.\" The primary reason for presentation was an episode of lightheadedness and muscle weakness. He was brought to the hospital by his sister after being unable to leave his bed for two days due to constant headache, lightheadedness, weakness, and vomiting after vomiting immediately after trying to eat.",
+          "reasoning": "The patient's chief complaint is explicitly stated under the 'Chief Complaint' section. The primary reason for presentation is detailed in the 'History of Present Illness' section, which describes the acute symptoms of lightheadedness and weakness that led to the patient being bed-bound and subsequently brought to the hospital.",
+          "matched_elements": [
+            {
+              "element_id": "E_0004",
+              "type": "section_header",
+              "content": "Chief Complaint:",
+              "page_number": 1,
+              "bbox_pixel": [
+                118.0,
+                328.0,
+                258.0,
+                341.0
+              ],
+              "bbox_pdf": [
+                42.480000000000004,
+                669.24,
+                92.88000000000001,
+                673.92
+              ],
+              "relevance": "This element is the header for the chief complaint section."
+            },
+            {
+              "element_id": "E_0005",
+              "type": "clinical_paragraph",
+              "content": "\"I got lightheadedness and felt too weak to walk\"",
+              "page_number": 1,
+              "bbox_pixel": [
+                269.0,
+                328.0,
+                650.0,
+                341.0
+              ],
+              "bbox_pdf": [
+                96.84,
+                669.24,
+                234.0,
+                673.92
+              ],
+              "relevance": "This element provides the patient's chief complaint in their own words."
+            },
+            {
+              "element_id": "E_0009",
+              "type": "clinical_paragraph",
+              "content": "Patient is a 48 year-old well-nourished Hispanic male with a 2-month history of Rheumatoid Arthritis and strong family history of autoimmune diseases presenting after an episode of lightheadedness and muscle weakness.",
+              "page_number": 1,
+              "bbox_pixel": [
+                118.0,
+                412.0,
+                879.0,
+                453.0
+              ],
+              "bbox_pdf": [
+                42.480000000000004,
+                628.92,
+                316.44,
+                643.6800000000001
+              ],
+              "relevance": "This element states the reason for presentation at the beginning of the History of Present Illness."
+            },
+            {
+              "element_id": "E_0012",
+              "type": "clinical_paragraph",
+              "content": "In the last month, the patient has been experiencing night sweats, chills, and subjective fevers almost every night. This has impacted his sleep significantly, and he has not been able to sleep more than 4 consecutive hours in over one month. Three days ago, the patient was at work when a headache came on, he felt particularly light headed and weak. His left work early on that day. In the last three days the patient has had a constant headache and lightheadedness, and felt unable to eat. When he has tried to eat, he has vomited immediately after eating. He has had no changes to his bowel movements. No blood in the stool or urine. The joint pain has returned to a 10/10 in severity in the past 3 days. The patient has felt too weak to walk or leave the bedroom. He was brought to the hospital by his sister, a nurse, after two days being unable to leave bed. At this time, his sister noticed a facial rash in the pre-auricular area that extended over the eyelids and bridge of the nose",
+              "page_number": 1,
+              "bbox_pixel": [
+                118.0,
+                746.0,
+                879.0,
+                910.0
+              ],
+              "bbox_pdf": [
+                42.480000000000004,
+                464.4,
+                316.44,
+                523.44
+              ],
+              "relevance": "This element details the acute events leading to the hospital presentation, including being too weak to walk and being brought to the hospital by his sister."
+            }
+          ],
+          "filter_stats": {
+            "original_elements": 83,
+            "filtered_elements": 74,
+            "reduction_ratio": "1.1x"
+          }
+        }
+      },
+      {
+        "question_id": "q2",
+        "question": "What autoimmune condition was the patient diagnosed with, and when did symptoms begin?",
+        "answer": {
+          "answer_summary": "The patient was diagnosed with the autoimmune condition Rheumatoid Arthritis. The assessment also strongly suggests a diagnosis of Sj\u00f6gren's Syndrome. Symptoms first began 4 months prior to the note, in November 2017.",
+          "reasoning": "The History of Present Illness and the Assessment sections provide the answer. The HPI states the patient was diagnosed with Rheumatoid Arthritis and that symptoms began 4 months prior to the note (November 2017). The Assessment section confirms the Rheumatoid Arthritis diagnosis and also provides a detailed assessment suggesting a concurrent diagnosis of Sj\u00f6gren's Syndrome.",
+          "matched_elements": [
+            {
+              "element_id": "E_0009",
+              "type": "clinical_paragraph",
+              "content": "Patient is a 48 year-old well-nourished Hispanic male with a 2-month history of Rheumatoid Arthritis and strong family history of autoimmune diseases presenting after an episode of lightheadedness and muscle weakness.",
+              "page_number": 1,
+              "bbox_pixel": [
+                118.0,
+                412.0,
+                879.0,
+                453.0
+              ],
+              "bbox_pdf": [
+                42.480000000000004,
+                628.92,
+                316.44,
+                643.6800000000001
+              ],
+              "relevance": "States the patient has a 2-month history of Rheumatoid Arthritis."
+            },
+            {
+              "element_id": "E_0010",
+              "type": "clinical_paragraph",
+              "content": "Patient began experiencing symptoms 4 months ago (November 2017). At that time he experienced fatigue and joint pain in the knees and hands. He was diagnosed with Rheumatoid Arthritis. He was given a short course of corticosteroids at that time that alleviated his symptoms. He was also started on methotrexate at that time. However, he felt that the medication was ineffective and stopped after 2 weeks.",
+              "page_number": 1,
+              "bbox_pixel": [
+                118.0,
+                469.0,
+                879.0,
+                551.0
+              ],
+              "bbox_pdf": [
+                42.480000000000004,
+                593.64,
+                316.44,
+                623.16
+              ],
+              "relevance": "States that symptoms began 4 months ago (November 2017) and the patient was diagnosed with Rheumatoid Arthritis at that time."
+            },
+            {
+              "element_id": "E_0004",
+              "type": "assessment_plan",
+              "content": "Assessment: The patient has a personal history of autoimmune disease and a positive HLA genotype. He was diagnosed with Rheumatoid arthritis 2 months ago. His presenting symptom of bilateral joint pain in the knees and fingers paired with a positive RF, CCP, and decreased CD4 count made this diagnosis very likely. Sj\u00f6grens Syndrome is very heavily associated with Rheumatoid Arthritis, estimated prevalence between 17-30% in those with previously diagnosed Rheumatoid Arthritis. The patient's laboratory and imaging studies, including a positive SS-A, neck CT showing chronic enlargement of the Parotid Gland, paired with the symptom of dry mouth and a burning sensation of the eye, a possible manifestation of dry eyes, are suggestive of Sj\u00f6grens Syndrome. Another possible cause of the burning sensation is trigeminal neuralgia, a neurological manifestation of Sjogren's syndrome. However, this patient also presents with some of rarer manifestations of Sj\u00f6grens Syndrome. According to UpToDate: Clinical manifestations of Sj\u00f6gren's syndrome: Extraglandular disease, normochromic normocytic anemia can be seen in up to 20% of sjogrens patients. Further, \b\bPatients with SS may exhibit abnormal counts in any cell line, and patients with cytopenia often have involvement of more than one cell line\b\b3. This hematologic manifestation of disease accounts for many of the abnormal blood tests including the anemia and leukopenia. This anemia could be the underlying cause of the lightheadedness and muscle weakness. Further, a more rare manifestation of Sj\u00f6grens Syndrome, is autonomic neuropathy3. Autonomic neuropathy manifests as headache, lightheadedness, early satiety, vomiting, weight loss, and sweating abnormalities. The patient's headaches with lightheadedness, as well as his GI symptoms and night sweats can be explained by the neurological manifestations of Sj\u00f6gren's syndrome. Finally, autoimmune diseases are often associated with cutaneous manifestations. Some of these, such as the malar rash of lupus are well defined, while others are ill defined. The pre-auricular rash can be seen as an atypical cutaneous presentation of Sjogren's syndrome.",
+              "page_number": 5,
+              "bbox_pixel": [
+                118.0,
+                174.0,
+                879.0,
+                569.0
+              ],
+              "bbox_pdf": [
+                42.480000000000004,
+                587.16,
+                316.44,
+                729.36
+              ],
+              "relevance": "Confirms the diagnosis of Rheumatoid Arthritis and provides an assessment suggesting a diagnosis of Sj\u00f6gren's Syndrome."
+            }
+          ],
+          "filter_stats": {
+            "original_elements": 83,
+            "filtered_elements": 41,
+            "reduction_ratio": "2.0x"
+          }
+        }
+      },
+      {
+        "question_id": "q3",
+        "question": "What medications were prescribed for the patient's condition, and what was the patient's response?",
+        "answer": {
+          "answer_summary": "The patient has been prescribed the following medications:\n\n- **Corticosteroids:** Previously given as a short course, which the patient reported \"alleviated his symptoms\" and \"helped his symptoms significantly.\" The plan is to start corticosteroids again acutely.\n- **Methotrexate:** Previously prescribed, but the patient stopped taking it after 2 weeks because he felt it was \"ineffective\" and \"did not feel it helped with his symptoms.\"\n- **Ibuprofen:** Taken as needed (PRN) for headaches and joint pain. However, it is noted that the joint pain was \"not alleviated by NSAIDS.\"\n\n**Planned Medications:**\n- **Hydrochloroquine or an immunosuppressant:** Considered for long-term treatment.",
+          "reasoning": "The answer was compiled from the History of Present Illness, Past Medical History, Medications, and Assessment and Plan sections. These sections describe past medications (corticosteroids, methotrexate), current as-needed medication (ibuprofen), and planned future medications (corticosteroids, hydrochloroquine). The patient's response to each medication is also detailed in these sections.",
+          "matched_elements": [
+            {
+              "element_id": "E_0010",
+              "type": "clinical_paragraph",
+              "content": "Patient began experiencing symptoms 4 months ago (November 2017). At that time he experienced fatigue and joint pain in the knees and hands. He was diagnosed with Rheumatoid Arthritis. He was given a short course of corticosteroids at that time that alleviated his symptoms. He was also started on methotrexate at that time. However, he felt that the medication was ineffective and stopped after 2 weeks.",
+              "page_number": 1,
+              "bbox_pixel": [
+                118.0,
+                469.0,
+                879.0,
+                551.0
+              ],
+              "bbox_pdf": [
+                42.480000000000004,
+                593.64,
+                316.44,
+                623.16
+              ],
+              "relevance": "Details past prescriptions of corticosteroids and methotrexate and the patient's response to them."
+            },
+            {
+              "element_id": "E_0011",
+              "type": "clinical_paragraph",
+              "content": "For the past two months, the patient has been experiencing worsening symptoms. He has been experiencing progressively worsening headaches accompanied with lightheadedness, light and sound sensitivity, nausea, and vomiting. He reports no loss of consciousness associated with the headaches. No convulsion, change of vision, or loss of continence. When the headaches began 2 months ago, they would last about half of a day and occur approximately once per week. They increased in frequency and duration and over the last month have been almost daily and lasted most of the day. He is unable to eat during headaches. Concurrently, the patient is experiencing worsening joint pain in the knees and hands. The pain is constant, accompanied by swollen and hot joints, and not alleviated by NSAIDS. Also in the last two months, he has experienced a dry mouth that makes swallowing food difficult and a burning sensation in his eyes.",
+              "page_number": 1,
+              "bbox_pixel": [
+                118.0,
+                567.0,
+                879.0,
+                730.0
+              ],
+              "bbox_pdf": [
+                42.480000000000004,
+                529.2,
+                316.44,
+                587.88
+              ],
+              "relevance": "States that the patient's joint pain is not alleviated by NSAIDs, which includes ibuprofen."
+            },
+            {
+              "element_id": "E_0004",
+              "type": "list_items",
+              "content": "- Rheumatoid Arthritis, diagnosed January 2018. Patient was diagnosed when he presented to the emergency room with joint pain in the hands and knees. He was treated with corticosteroids and methotrexate. The patient reported that the corticosteroids helped his symptoms significantly. He only continued on the methotrexate for 2 weeks, as he did not feel it helped with his symptoms.",
+              "page_number": 2,
+              "bbox_pixel": [
+                118.0,
+                284.0,
+                879.0,
+                353.0
+              ],
+              "bbox_pdf": [
+                42.480000000000004,
+                664.92,
+                316.44,
+                689.76
+              ],
+              "relevance": "Confirms past treatment with corticosteroids and methotrexate and the patient's response to both."
+            },
+            {
+              "element_id": "E_0009",
+              "type": "list_items",
+              "content": "- Ibuprofen PRN for headaches and joint pain.",
+              "page_number": 2,
+              "bbox_pixel": [
+                118.0,
+                462.0,
+                490.0,
+                476.0
+              ],
+              "bbox_pdf": [
+                42.480000000000004,
+                620.64,
+                176.4,
+                625.6800000000001
+              ],
+              "relevance": "Lists a current medication the patient is taking as needed."
+            },
+            {
+              "element_id": "E_0005",
+              "type": "assessment_plan",
+              "content": "Plan: A Schirmer test would help differentiate if the burning sensation in the eyes is due to dry eyes or another cause, possibly trigeminal neuralgia. Acutely, the patient should be started on corticosteroids to treat the acute symptoms of Sj\u00f6grens syndrome. Long term, hydrochloroquine or an immunosuppressant may want to be considered. This should help with the joint pain and constitutional symptoms. Monitoring of RBC and WBC should be continued to make sure they return to normal ranges after this acute event.",
+              "page_number": 5,
+              "bbox_pixel": [
+                118.0,
+                583.0,
+                879.0,
+                677.0
+              ],
+              "bbox_pdf": [
+                42.480000000000004,
+                548.28,
+                316.44,
+                582.12
+              ],
+              "relevance": "Details the plan for future medications, including corticosteroids, hydrochloroquine, or an immunosuppressant."
+            }
+          ],
+          "filter_stats": {
+            "original_elements": 83,
+            "filtered_elements": 80,
+            "reduction_ratio": "1.0x"
+          }
+        }
+      },
+      {
+        "question_id": "q4",
+        "question": "What significant weight changes has the patient experienced?",
+        "answer": {
+          "answer_summary": "The patient reports a 36-pound unintentional weight loss over the past four months.",
+          "reasoning": "The patient's weight change is explicitly mentioned in the clinical history. Element E_0002 on page 2 states the patient has experienced a '36 pound unintentional weight loss' over the past four months. This symptom is also mentioned in the assessment and plan section on pages 5 and 6 as a relevant symptom for the differential diagnoses of Sj\u00f6gren's Syndrome and B-Cell Lymphoma.",
+          "matched_elements": [
+            {
+              "element_id": "E_0002",
+              "type": "clinical_paragraph",
+              "content": "During the course of the past four months the patient reports a 36 pound unintentional weight loss and significant decrease to his muscle mass. He has been experiencing early satiety and nausea when he does eat. He reports no loss of sensation, pain, temperature, vibration. He does report clumsiness, especially of the hands. He also reports a depressed mood and frustration with being unable to work during his illness.",
+              "page_number": 2,
+              "bbox_pixel": [
+                118.0,
+                155.0,
+                879.0,
+                240.0
+              ],
+              "bbox_pdf": [
+                42.480000000000004,
+                705.6,
+                316.44,
+                736.2
+              ],
+              "relevance": "This element explicitly states the patient has had a 36 pound unintentional weight loss over the past four months."
+            },
+            {
+              "element_id": "E_0004",
+              "type": "assessment_plan",
+              "content": "Assessment: The patient has a personal history of autoimmune disease and a positive HLA genotype. He was diagnosed with Rheumatoid arthritis 2 months ago. His presenting symptom of bilateral joint pain in the knees and fingers paired with a positive RF, CCP, and decreased CD4 count made this diagnosis very likely. Sj\u00f6grens Syndrome is very heavily associated with Rheumatoid Arthritis, estimated prevalence between 17-30% in those with previously diagnosed Rheumatoid Arthritis. The patient's laboratory and imaging studies, including a positive SS-A, neck CT showing chronic enlargement of the Parotid Gland, paired with the symptom of dry mouth and a burning sensation of the eye, a possible manifestation of dry eyes, are suggestive of Sj\u00f6grens Syndrome. Another possible cause of the burning sensation is trigeminal neuralgia, a neurological manifestation of Sjogren's syndrome. However, this patient also presents with some of rarer manifestations of Sj\u00f6grens Syndrome. According to UpToDate: Clinical manifestations of Sj\u00f6gren's syndrome: Extraglandular disease, normochromic normocytic anemia can be seen in up to 20% of sjogrens patients. Further, \u201cPatients with SS may exhibit abnormal counts in any cell line, and patients with cytopenia often have involvement of more than one cell line\u201d3. This hematologic manifestation of disease accounts for many of the abnormal blood tests including the anemia and leukopenia. This anemia could be the underlying cause of the lightheadedness and muscle weakness. Further, a more rare manifestation of Sj\u00f6grens Syndrome, is autonomic neuropathy3. Autonomic neuropathy manifests as headache, lightheadedness, early satiety, vomiting, weight loss, and sweating abnormalities. The patient's headaches with lightheadedness, as well as his GI symptoms and night sweats can be explained by the neurological manifestations of Sj\u00f6gren's syndrome. Finally, autoimmune diseases are often associated with cutaneous manifestations. Some of these, such as the malar rash of lupus are well defined, while others are ill defined. The pre-auricular rash can be seen as an atypical cutaneous presentation of Sjogren's syndrome.",
+              "page_number": 5,
+              "bbox_pixel": [
+                118.0,
+                174.0,
+                879.0,
+                569.0
+              ],
+              "bbox_pdf": [
+                42.480000000000004,
+                587.16,
+                316.44,
+                729.36
+              ],
+              "relevance": "This element mentions weight loss as a manifestation of autonomic neuropathy, which is being considered as part of the patient's diagnosis."
+            },
+            {
+              "element_id": "E_0002",
+              "type": "assessment_plan",
+              "content": "Assessment: Patients with both Rheumatoid Arthritis and Sj\u00f6grens syndrome have an increased risk of B-Cell lymphoma. This patient is experiencing night sweats, unintentional weight loss, subjective fever, and lymphadenopathy. He also has enlargement of the Parotid gland. The severity of this diagnosis makes it a do not miss in the differential. However, the small size of the lymph nodes, 4-5 mm, and the nature, not-fixed, makes this diagnosis less likely. Further, while the patient is experiencing Leukopenia, it is not extreme. We would expect a much lower WBC if this were a lymphoma.",
+              "page_number": 6,
+              "bbox_pixel": [
+                118.0,
+                124.0,
+                879.0,
+                244.0
+              ],
+              "bbox_pdf": [
+                42.480000000000004,
+                704.16,
+                316.44,
+                747.36
+              ],
+              "relevance": "This element lists unintentional weight loss as one of the key symptoms being assessed in the differential diagnosis for B-Cell Lymphoma."
+            }
+          ],
+          "filter_stats": {
+            "original_elements": 83,
+            "filtered_elements": 81,
+            "reduction_ratio": "1.0x"
+          }
+        }
+      },
+      {
+        "question_id": "q5",
+        "question": "What are the patient's current vital signs?",
+        "answer": {
+          "answer_summary": "The patient's vital signs are:\n- Temperature (T): 98.5\n- Heart Rate (HR): 68 bpm\n- Blood Pressure (BP): 126/85 mmHg\n- Respiratory Rate (RR): 16 breaths/minute",
+          "reasoning": "The patient's vital signs were found in a 'vital_signs_table' element located within the 'Physical Exam' section of the record. The content of this element provides the temperature, heart rate, blood pressure, and respiratory rate.",
+          "matched_elements": [
+            {
+              "element_id": "E_0016",
+              "type": "vital_signs_table",
+              "content": "Vitals: T 98.5, HR 68, BP 126/85, RR 16.",
+              "page_number": 3,
+              "bbox_pixel": [
+                118.0,
+                472.0,
+                560.0,
+                487.0
+              ],
+              "bbox_pdf": [
+                42.480000000000004,
+                616.6800000000001,
+                201.6,
+                622.0799999999999
+              ],
+              "relevance": "This element explicitly lists the patient's vital signs."
+            }
+          ],
+          "filter_stats": {
+            "original_elements": 83,
+            "filtered_elements": 36,
+            "reduction_ratio": "2.3x"
+          }
+        }
+      },
+      {
+        "question_id": "q6",
+        "question": "What is the differential diagnosis being considered for this patient?",
+        "answer": {
+          "answer_summary": "The differential diagnosis being considered for the patient includes:\n- Most Likely: Sj\u00f6gren's Syndrome\n- Alternative: Systemic Lupus Erythematosus (SLE)\n- Do Not Miss: B-Cell Lymphoma",
+          "reasoning": "The differential diagnosis was found in the \"Assessment and Plan\" section starting on page 5. The section explicitly lists the conditions being considered, which include a 'Most Likely', 'Alternative', and 'Do Not Miss' diagnosis.",
+          "matched_elements": [
+            {
+              "element_id": "E_0002",
+              "type": "clinical_paragraph",
+              "content": "Differential diagnosis includes:",
+              "page_number": 5,
+              "bbox_pixel": [
+                118.0,
+                120.0,
+                390.0,
+                134.0
+              ],
+              "bbox_pdf": [
+                42.480000000000004,
+                743.76,
+                140.4,
+                748.8
+              ],
+              "relevance": "This element explicitly introduces the list of differential diagnoses."
+            },
+            {
+              "element_id": "E_0003",
+              "type": "list_items",
+              "content": "\u2022 Most Likely: Sj\u0092grens Syndrome",
+              "page_number": 5,
+              "bbox_pixel": [
+                118.0,
+                146.0,
+                397.0,
+                160.0
+              ],
+              "bbox_pdf": [
+                42.480000000000004,
+                734.4,
+                142.92000000000002,
+                739.44
+              ],
+              "relevance": "This element lists Sj\u00f6gren's Syndrome as the most likely diagnosis in the differential."
+            },
+            {
+              "element_id": "E_0006",
+              "type": "list_items",
+              "content": "\u2022 Alternative: Systemic Lupus Erythematosus (SLE)",
+              "page_number": 5,
+              "bbox_pixel": [
+                118.0,
+                690.0,
+                609.0,
+                704.0
+              ],
+              "bbox_pdf": [
+                42.480000000000004,
+                538.56,
+                219.24,
+                543.6
+              ],
+              "relevance": "This element lists Systemic Lupus Erythematosus (SLE) as an alternative diagnosis in the differential."
+            },
+            {
+              "element_id": "E_0001",
+              "type": "list_items",
+              "content": "Do Not Miss: B-Cell Lymphoma",
+              "page_number": 6,
+              "bbox_pixel": [
+                118.0,
+                92.0,
+                403.0,
+                108.0
+              ],
+              "bbox_pdf": [
+                42.480000000000004,
+                753.12,
+                145.08,
+                758.88
+              ],
+              "relevance": "This element lists B-Cell Lymphoma as a 'do not miss' diagnosis in the differential."
+            }
+          ],
+          "filter_stats": {
+            "original_elements": 83,
+            "filtered_elements": 80,
+            "reduction_ratio": "1.0x"
+          }
+        }
+      },
+      {
+        "question_id": "q7",
+        "question": "What laboratory findings, test results, or symptoms support the diagnosis?",
+        "answer": {
+          "answer_summary": "The following laboratory findings, test results, and symptoms support the diagnosis of Sj\u00f6gren's Syndrome:\n\n**Laboratory & Test Findings:**\n*   **Autoimmune Markers:** Positive ANA (>1:640), Positive Rheumatoid Factor (70, Normal <20), Positive SS-A.\n*   **Hematology:** Anemia and leukopenia.\n*   **Imaging:** Neck CT showing chronic enlargement of the Parotid Gland.\n\n**Symptoms:**\n*   **Sicca Symptoms:** Dry mouth (making swallowing difficult) and a burning sensation in the eyes.\n*   **Musculoskeletal:** Worsening joint pain in knees and hands (constant, swollen, hot), muscle weakness, and decreased muscle mass.\n*   **Constitutional:** Fatigue, night sweats, chills, subjective fevers, and a 36-pound unintentional weight loss.\n*   **Neurological:** Progressively worsening headaches, lightheadedness, and clumsiness of the hands.\n*   **Gastrointestinal:** Nausea, vomiting, early satiety, and anorexia.\n*   **Dermatological:** Facial rash in the pre-auricular area.",
+          "reasoning": "The answer was compiled by extracting information from the 'History of Present Illness', 'Pertinent Diagnostic Tests', and 'Assessment and Plan' sections. The HPI and Assessment sections list the patient's symptoms, such as dry mouth, burning eyes, joint pain, headaches, and constitutional symptoms. The 'Pertinent Diagnostic Tests' section provides specific lab values like positive ANA and Rheumatoid Factor. The 'Assessment and Plan' section is crucial as it synthesizes all these findings, explicitly mentioning positive SS-A, anemia, leukopenia, and a neck CT result, and directly links them to the diagnosis of Sj\u00f6gren's Syndrome.",
+          "matched_elements": [
+            {
+              "element_id": "E_0011",
+              "type": "clinical_paragraph",
+              "content": "For the past two months, the patient has been experiencing worsening symptoms. He has been experiencing progressively worsening headaches accompanied with lightheadedness, light and sound sensitivity, nausea, and vomiting. He reports no loss of consciousness associated with the headaches. No convulsion, change of vision, or loss of continence. When the headaches began 2 months ago, they would last about half of a day and occur approximately once per week. They increased in frequency and duration and over the last month have been almost daily and lasted most of the day. He is unable to eat during headaches. Concurrently, the patient is experiencing worsening joint pain in the knees and hands. The pain is constant, accompanied by swollen and hot joints, and not alleviated by NSAIDS. Also in the last two months, he has experienced a dry mouth that makes swallowing food difficult and a burning sensation in his eyes.",
+              "page_number": 1,
+              "bbox_pixel": [
+                118.0,
+                567.0,
+                879.0,
+                730.0
+              ],
+              "bbox_pdf": [
+                42.480000000000004,
+                529.2,
+                316.44,
+                587.88
+              ],
+              "relevance": "This element details key symptoms supporting the diagnosis, including worsening headaches, lightheadedness, joint pain, dry mouth, and a burning sensation in the eyes."
+            },
+            {
+              "element_id": "E_0012",
+              "type": "clinical_paragraph",
+              "content": "In the last month, the patient has been experiencing night sweats, chills, and subjective fevers almost every night. This has impacted his sleep significantly, and he has not been able to sleep more than 4 consecutive hours in over one month. Three days ago, the patient was at work when a headache came on, he felt particularly light headed and weak. His left work early on that day. In the last three days the patient has had a constant headache and lightheadedness, and felt unable to eat. When he has tried to eat, he has vomited immediately after eating. He has had no changes to his bowel movements. No blood in the stool or urine. The joint pain has returned to a 10/10 in severity in the past 3 days. The patient has felt too weak to walk or leave the bedroom. He was brought to the hospital by his sister, a nurse, after two days being unable to leave bed. At this time, his sister noticed a facial rash in the pre-auricular area that extended over the eyelids and bridge of the nose",
+              "page_number": 1,
+              "bbox_pixel": [
+                118.0,
+                746.0,
+                879.0,
+                910.0
+              ],
+              "bbox_pdf": [
+                42.480000000000004,
+                464.4,
+                316.44,
+                523.44
+              ],
+              "relevance": "This paragraph describes constitutional symptoms like night sweats, chills, and fevers, as well as weakness, vomiting, and a facial rash, all of which are pertinent to the diagnosis."
+            },
+            {
+              "element_id": "E_0002",
+              "type": "clinical_paragraph",
+              "content": "During the course of the past four months the patient reports a 36 pound unintentional weight loss and significant decrease to his muscle mass. He has been experiencing early satiety and nausea when he does eat. He reports no loss of sensation, pain, temperature, vibration. He does report clumsiness, especially of the hands. He also reports a depressed mood and frustration with being unable to work during his illness.",
+              "page_number": 2,
+              "bbox_pixel": [
+                118.0,
+                155.0,
+                879.0,
+                240.0
+              ],
+              "bbox_pdf": [
+                42.480000000000004,
+                705.6,
+                316.44,
+                736.2
+              ],
+              "relevance": "This element notes significant unintentional weight loss, early satiety, and nausea, which are supporting symptoms."
+            },
+            {
+              "element_id": "E_0029",
+              "type": "list_items",
+              "content": "Positive ANA (>1:640)",
+              "page_number": 3,
+              "bbox_pixel": [
+                173.0,
+                834.0,
+                420.0,
+                849.0
+              ],
+              "bbox_pdf": [
+                62.28,
+                486.36,
+                151.20000000000002,
+                491.76
+              ],
+              "relevance": "This is a key laboratory finding, a positive ANA test, which is highly suggestive of an autoimmune condition."
+            },
+            {
+              "element_id": "E_0030",
+              "type": "list_items",
+              "content": "Positive Rheumatoid Factor (70, Normal <20)",
+              "page_number": 3,
+              "bbox_pixel": [
+                173.0,
+                856.0,
+                600.0,
+                871.0
+              ],
+              "bbox_pdf": [
+                62.28,
+                478.44,
+                216.0,
+                483.84
+              ],
+              "relevance": "This is a key laboratory finding, a positive Rheumatoid Factor, which supports the diagnosis of an autoimmune disease like Rheumatoid Arthritis or Sj\u00f6gren's Syndrome."
+            },
+            {
+              "element_id": "E_0004",
+              "type": "assessment_plan",
+              "content": "Assessment: The patient has a personal history of autoimmune disease and a positive HLA genotype. He was diagnosed with Rheumatoid arthritis 2 months ago. His presenting symptom of bilateral joint pain in the knees and fingers paired with a positive RF, CCP, and decreased CD4 count made this diagnosis very likely. Sj\u00f6grens Syndrome is very heavily associated with Rheumatoid Arthritis, estimated prevalence between 17-30% in those with previously diagnosed Rheumatoid Arthritis. The patient's laboratory and imaging studies, including a positive SS-A, neck CT showing chronic enlargement of the Parotid Gland, paired with the symptom of dry mouth and a burning sensation of the eye, a possible manifestation of dry eyes, are suggestive of Sj\u00f6grens Syndrome. Another possible cause of the burning sensation is trigeminal neuralgia, a neurological manifestation of Sjogren's syndrome. However, this patient also presents with some of rarer manifestations of Sj\u00f6grens Syndrome. According to UpToDate: Clinical manifestations of Sj\u00f6gren's syndrome: Extraglandular disease, normochromic normocytic anemia can be seen in up to 20% of sjogrens patients. Further, \u201cPatients with SS may exhibit abnormal counts in any cell line, and patients with cytopenia often have involvement of more than one cell line\u201d3. This hematologic manifestation of disease accounts for many of the abnormal blood tests including the anemia and leukopenia. This anemia could be the underlying cause of the lightheadedness and muscle weakness. Further, a more rare manifestation of Sj\u00f6grens Syndrome, is autonomic neuropathy3. Autonomic neuropathy manifests as headache, lightheadedness, early satiety, vomiting, weight loss, and sweating abnormalities. The patient's headaches with lightheadedness, as well as his GI symptoms and night sweats can be explained by the neurological manifestations of Sj\u00f6gren's syndrome. Finally, autoimmune diseases are often associated with cutaneous manifestations. Some of these, such as the malar rash of lupus are well defined, while others are ill defined. The pre-auricular rash can be seen as an atypical cutaneous presentation of Sjogren's syndrome.",
+              "page_number": 5,
+              "bbox_pixel": [
+                118.0,
+                174.0,
+                879.0,
+                569.0
+              ],
+              "bbox_pdf": [
+                42.480000000000004,
+                587.16,
+                316.44,
+                729.36
+              ],
+              "relevance": "This assessment explicitly summarizes the laboratory findings (positive RF, positive SS-A, anemia, leukopenia), imaging (neck CT showing parotid gland enlargement), and symptoms (dry mouth, burning eyes, lightheadedness, muscle weakness, headaches, GI symptoms, night sweats, rash) that support the diagnosis of Sj\u00f6gren's Syndrome."
+            }
+          ],
+          "filter_stats": {
+            "original_elements": 83,
+            "filtered_elements": 81,
+            "reduction_ratio": "1.0x"
+          }
+        }
+      },
+      {
+        "question_id": "q8",
+        "question": "What risk factors or family history are relevant to this patient's condition?",
+        "answer": {
+          "answer_summary": "The patient has several risk factors and a relevant family history for his condition. His primary personal risk factor is a diagnosis of Rheumatoid Arthritis, which is noted to be heavily associated with Sj\tgren's Syndrome. The patient also has a strong family history of autoimmune diseases, which includes:\n- Mother: Hypothyroidism\n- Brother: Vitiligo",
+          "reasoning": "The answer was found by identifying the patient's personal medical history and family history. The patient has a personal history of Rheumatoid Arthritis, which is a significant risk factor for his current condition. The 'Family History' section and the 'History of Present Illness' section note a strong family history of autoimmune diseases, specifically Hypothyroidism in his mother and Vitiligo in his brother.",
+          "matched_elements": [
+            {
+              "element_id": "E_0009",
+              "type": "clinical_paragraph",
+              "content": "Patient is a 48 year-old well-nourished Hispanic male with a 2-month history of Rheumatoid Arthritis and strong family history of autoimmune diseases presenting after an episode of lightheadedness and muscle weakness.",
+              "page_number": 1,
+              "bbox_pixel": [
+                118.0,
+                412.0,
+                879.0,
+                453.0
+              ],
+              "bbox_pdf": [
+                42.480000000000004,
+                628.92,
+                316.44,
+                643.6800000000001
+              ],
+              "relevance": "States the patient has a history of Rheumatoid Arthritis and a strong family history of autoimmune diseases, both of which are significant risk factors."
+            },
+            {
+              "element_id": "E_0004",
+              "type": "list_items",
+              "content": "- Rheumatoid Arthritis, diagnosed January 2018. Patient was diagnosed when he presented to the emergency room with joint pain in the hands and knees. He was treated with corticosteroids and methotrexate. The patient reported that the corticosteroids helped his symptoms significantly. He only continued on the methotrexate for 2 weeks, as he did not feel it helped with his symptoms.",
+              "page_number": 2,
+              "bbox_pixel": [
+                118.0,
+                284.0,
+                879.0,
+                353.0
+              ],
+              "bbox_pdf": [
+                42.480000000000004,
+                664.92,
+                316.44,
+                689.76
+              ],
+              "relevance": "Provides details on the patient's diagnosis of Rheumatoid Arthritis, which is a personal risk factor for his current condition."
+            },
+            {
+              "element_id": "E_0011",
+              "type": "section_header",
+              "content": "Family History:",
+              "page_number": 2,
+              "bbox_pixel": [
+                118.0,
+                520.0,
+                266.0,
+                534.0
+              ],
+              "bbox_pdf": [
+                42.480000000000004,
+                599.76,
+                95.76,
+                604.8
+              ],
+              "relevance": "This section contains the patient's family medical history."
+            },
+            {
+              "element_id": "E_0013",
+              "type": "list_items",
+              "content": "Mother- living aged 72 - Hypothyroidism",
+              "page_number": 2,
+              "bbox_pixel": [
+                118.0,
+                561.0,
+                480.0,
+                575.0
+              ],
+              "bbox_pdf": [
+                42.480000000000004,
+                585.0,
+                172.8,
+                590.04
+              ],
+              "relevance": "Details the mother's history of Hypothyroidism, an autoimmune condition."
+            },
+            {
+              "element_id": "E_0014",
+              "type": "list_items",
+              "content": "Brother - living aged 44 \tVitiligo",
+              "page_number": 2,
+              "bbox_pixel": [
+                118.0,
+                578.0,
+                430.0,
+                592.0
+              ],
+              "bbox_pdf": [
+                42.480000000000004,
+                578.88,
+                154.8,
+                583.92
+              ],
+              "relevance": "Details the brother's history of Vitiligo, an autoimmune condition."
+            },
+            {
+              "element_id": "E_0004",
+              "type": "assessment_plan",
+              "content": "Assessment: The patient has a personal history of autoimmune disease and a positive HLA genotype. He was diagnosed with Rheumatoid arthritis 2 months ago. His presenting symptom of bilateral joint pain in the knees and fingers paired with a positive RF, CCP, and decreased CD4 count made this diagnosis very likely. Sj\tgrens Syndrome is very heavily associated with Rheumatoid Arthritis, estimated prevalence between 17-30% in those with previously diagnosed Rheumatoid Arthritis. The patient's laboratory and imaging studies, including a positive SS-A, neck CT showing chronic enlargement of the Parotid Gland, paired with the symptom of dry mouth and a burning sensation of the eye, a possible manifestation of dry eyes, are suggestive of Sj\tgrens Syndrome. Another possible cause of the burning sensation is trigeminal neuralgia, a neurological manifestation of Sjogren's syndrome. However, this patient also presents with some of rarer manifestations of Sj\tgrens Syndrome. According to UpToDate: Clinical manifestations of Sj\tgren's syndrome: Extraglandular disease, normochromic normocytic anemia can be seen in up to 20% of sjogrens patients. Further, \tPatients with SS may exhibit abnormal counts in any cell line, and patients with cytopenia often have involvement of more than one cell line\t3. This hematologic manifestation of disease accounts for many of the abnormal blood tests including the anemia and leukopenia. This anemia could be the underlying cause of the lightheadedness and muscle weakness. Further, a more rare manifestation of Sj\tgrens Syndrome, is autonomic neuropathy3. Autonomic neuropathy manifests as headache, lightheadedness, early satiety, vomiting, weight loss, and sweating abnormalities. The patient's headaches with lightheadedness, as well as his GI symptoms and night sweats can be explained by the neurological manifestations of Sj\tgren's syndrome. Finally, autoimmune diseases are often associated with cutaneous manifestations. Some of these, such as the malar rash of lupus are well defined, while others are ill defined. The pre-auricular rash can be seen as an atypical cutaneous presentation of Sjogren's syndrome.",
+              "page_number": 5,
+              "bbox_pixel": [
+                118.0,
+                174.0,
+                879.0,
+                569.0
+              ],
+              "bbox_pdf": [
+                42.480000000000004,
+                587.16,
+                316.44,
+                729.36
+              ],
+              "relevance": "Explicitly states that the patient's history of Rheumatoid Arthritis is a significant risk factor for Sj\tgren's Syndrome."
+            }
+          ],
+          "filter_stats": {
+            "original_elements": 83,
+            "filtered_elements": 80,
+            "reduction_ratio": "1.0x"
+          }
+        }
+      }
+    ]
+  },
+  "Mental and Psychiatric evaluation": {
+    "document_id": "Mental and Psychiatric evaluation",
+    "source_json": "Mental and Psychiatric evaluation_artifacts.json",
+    "total_questions": 4,
+    "questions": [
+      {
+        "question_id": "q1",
+        "question": "What is the primary psychiatric concern being evaluated?",
+        "answer": {
+          "answer_summary": "The primary psychiatric concern being evaluated is the patient's mental capacity. This assessment is being conducted because the patient has a diagnosis of Dementia, which has resulted in an impairment of the functioning of his mind and brain, affecting his cognitive abilities and decision-making skills.",
+          "reasoning": "The documents explicitly state that the purpose of the evaluation is a 'mental capacity assessment'. The primary diagnosis listed is 'Dementia', and the report details how the patient's dementia and stroke have impaired the functioning of his mind and brain, affecting his ability to make decisions. The entire report is structured around assessing the patient's mental capacity in light of this diagnosis.",
+          "matched_elements": [
+            {
+              "element_id": "E_0003",
+              "type": "clinical_paragraph",
+              "content": "Please state if you have been seeing the patient regularly over a period of time (if so,\nplease state when you first started seeing the patient and how often you see the\npatient) or if you saw the patient specifically for this mental capacity assessment only.",
+              "page_number": 2,
+              "bbox_pixel": [
+                175.0,
+                96.0,
+                879.0,
+                150.0
+              ],
+              "bbox_pdf": [
+                63.00000025831082,
+                787.6799931456841,
+                316.44000129745837,
+                807.119992976519
+              ],
+              "relevance": "This element explicitly states that the purpose of the visit is a 'mental capacity assessment'."
+            },
+            {
+              "element_id": "E_0012",
+              "type": "clinical_paragraph",
+              "content": "After that, Mr Tan was referred to Blackacre Hospital for follow-up treatment from in\nNovember 2010. The clinical impression was that he was manifesting behavioural and\npsychological symptoms secondary to Dementia.",
+              "page_number": 2,
+              "bbox_pixel": [
+                175.0,
+                863.0,
+                879.0,
+                919.0
+              ],
+              "bbox_pdf": [
+                63.00000025831082,
+                510.8399955547192,
+                316.44000129745837,
+                530.9999953792889
+              ],
+              "relevance": "This element provides the clinical impression of 'Dementia' as the cause of the patient's symptoms."
+            },
+            {
+              "element_id": "E_0003",
+              "type": "problem_list",
+              "content": "1. Dementia",
+              "page_number": 5,
+              "bbox_pixel": [
+                213.0,
+                92.0,
+                317.0,
+                106.0
+              ],
+              "bbox_pdf": [
+                76.68000031440117,
+                803.5199930078459,
+                114.12000046791161,
+                808.5599929639883
+              ],
+              "relevance": "This element lists 'Dementia' as the primary diagnosis."
+            },
+            {
+              "element_id": "E_0005",
+              "type": "section_header",
+              "content": "SECTION 4: OPINION ON PATIENT'S MENTAL CAPACITY",
+              "page_number": 5,
+              "bbox_pixel": [
+                175.0,
+                657.0,
+                718.0,
+                670.0
+              ],
+              "bbox_pdf": [
+                63.00000025831082,
+                600.4799947746806,
+                258.4800010598124,
+                605.1599947339556
+              ],
+              "relevance": "This section header confirms that the core of the report is the opinion on the patient's mental capacity."
+            },
+            {
+              "element_id": "E_0003",
+              "type": "clinical_paragraph",
+              "content": "Mr Tan's dementia and stroke have impaired the functioning of his mind and brain. His failure to remember where he was (i.e. in the hospital) and the day and date, despite being told a short while ago, shows his inability to retain information. He was also not able to remember basic information such as his age, and the address where he lives.",
+              "page_number": 7,
+              "bbox_pixel": [
+                179.0,
+                118.0,
+                879.0,
+                210.0
+              ],
+              "bbox_pdf": [
+                64.44000026421507,
+                766.0799933336452,
+                316.44000129745837,
+                799.1999930454382
+              ],
+              "relevance": "This element explains how the patient's dementia has impaired the functioning of his mind and brain, which is the basis for the mental capacity assessment."
+            }
+          ],
+          "filter_stats": {
+            "original_elements": 131,
+            "filtered_elements": 88,
+            "reduction_ratio": "1.5x"
+          }
+        }
+      },
+      {
+        "question_id": "q2",
+        "question": "What is the patient's mental status examination findings?",
+        "answer": {
+          "answer_summary": "The mental status examination was conducted on 20 June 2015. The findings are as follows:\n\n- **Mood and Affect:** Mood was euthymic (normal), and he had no psychotic symptoms.\n\n- **Orientation:**\n  - **Person:** Oriented to self and his son. Identified the examiner as a doctor only after being prompted.\n  - **Place:** Disoriented. Unable to identify he was in a hospital clinic and forgot moments after being told. Stated his flat was in Bedok when it is in Jurong.\n  - **Time:** Disoriented. Stated the date was 10 February (actual: 20 June), the day was Wednesday (actual: Monday), and the time was 5pm (actual: 3pm). He could not state the year and was unable to tell time from a watch.\n\n- **Memory:**\n  - Could not remember the doctor's name despite a 5-year history.\n  - Demonstrated poor short-term retention, forgetting the location and date moments after being told.\n\n- **Cognition and Fund of Knowledge:**\n  - **Basic Information:** Stated his age as 50 (actual: 55), could not recall his birthday, and incorrectly named the Prime Minister.\n  - **Arithmetic:** Unable to perform simple calculations (4+3=8, could not subtract 7 from 10) and could not count backwards from 20 to 1.\n  - **Financial:** Unable to recognize currency correctly (identified a 50-cent coin as 20 cents and a $10 note as $2).\n\n- **Insight:** Poor insight into his medical condition. He did not know his medical problems, the reason for prior hospitalization, or if he was taking any medication.",
+          "reasoning": "The patient's mental status examination findings are detailed across pages 3 and 4 of the document, under the section 'Findings from physical examination / mental state examination'. The findings cover mood, orientation, memory, basic information recall, arithmetic skills, financial knowledge, and insight into his own health.",
+          "matched_elements": [
+            {
+              "element_id": "E_0005",
+              "type": "section_header",
+              "content": "Findings from physical examination / mental state examination:",
+              "page_number": 3,
+              "relevance": "This is the main section header for the mental state examination findings."
+            },
+            {
+              "element_id": "E_0007",
+              "type": "clinical_paragraph",
+              "content": "Mr Tan was brought to the clinic in a wheel chair. His mood was euthymic (i.e. normal, non-depressed and reasonably positive mood) and he did not have any psychotic symptoms.",
+              "page_number": 3,
+              "relevance": "Describes the patient's mood and lack of psychotic symptoms."
+            },
+            {
+              "element_id": "E_0009",
+              "type": "clinical_paragraph",
+              "content": "With regard to his orientation to time, place and person, he was unable to tell that he was in a hospital clinic but identified his son and was able to tell his own name and the name of his son. After being told he was in a hospital clinic, he identified me as a doctor, when asked. However, he could not remember my name, although I have been treating him for the last 5 years. He was able to tell correctly how he arrived at the clinic. However, when asked some moments later where he was, he said he did not know.",
+              "page_number": 3,
+              "relevance": "Details the patient's orientation to person and place, and short-term memory deficits."
+            },
+            {
+              "element_id": "E_0010",
+              "type": "clinical_paragraph",
+              "content": "He said that it was 10 February (actual date 20 June) and it was a Wednesday (actual day, Monday). He appeared to be just guessing as to what date and day it was. After being told what the day and date were, he forgot a few moments later after being asked again. He could not answer when asked what year it was.",
+              "page_number": 3,
+              "relevance": "Details the patient's disorientation to time (date, day, year) and short-term memory deficits."
+            },
+            {
+              "element_id": "E_0011",
+              "type": "clinical_paragraph",
+              "content": "When asked what time it was, he said that it was 5pm in the afternoon (actual time, 3pm). He was not able to tell the time from looking at a watch.",
+              "page_number": 3,
+              "relevance": "Details the patient's disorientation to time and inability to read a watch."
+            },
+            {
+              "element_id": "E_0013",
+              "type": "clinical_paragraph",
+              "content": "He gave his age as 50 years old (actually 55 years) and could not answer when asked when his birthday was. He correctly said he lived in a flat with his son, but could not give the correct address, and also got the area wrong (he said the flat was in Bedok, when it was actually in Jurong.) He incorrectly stated that the Prime Minister was Lee Kuan Yew.",
+              "page_number": 3,
+              "relevance": "Details deficits in recalling basic personal and general information."
+            },
+            {
+              "element_id": "E_0003",
+              "type": "clinical_paragraph",
+              "content": "Mr Tan was unable to perform simple arithmetic such as 4 plus 3, giving 8 as the answer, and could not subtract 7 from 10. He could not count backwards from 20 to 1. He was unable to recognise notes or coins (he identified a 50-cent coin as 20 cents and a 10-dollar note as 2 dollars).",
+              "page_number": 4,
+              "relevance": "Details the patient's inability to perform simple arithmetic and recognize currency."
+            },
+            {
+              "element_id": "E_0006",
+              "type": "clinical_paragraph",
+              "content": "I asked him whether he knew what medical problems he had. Mr Tan just stared at me blankly and shook his head. I asked him whether he remembered being in hospital before. Mr Tan nodded. I asked him if he knew what he was in hospital for. Mr Tan shook his head. I asked him if he was taking any medicine at the moment. Mr Tan just looked at me blankly and did not reply.",
+              "page_number": 4,
+              "relevance": "Details the patient's lack of insight into his own medical history and treatment."
+            },
+            {
+              "element_id": "E_0007",
+              "type": "subsection_header",
+              "content": "Date of physical examination/mental state examination: 20 June 2015",
+              "page_number": 4,
+              "relevance": "Provides the date the mental state examination was conducted."
+            }
+          ],
+          "filter_stats": {
+            "original_elements": 131,
+            "filtered_elements": 86,
+            "reduction_ratio": "1.5x"
+          }
+        }
+      },
+      {
+        "question_id": "q3",
+        "question": "What medications is the patient currently taking for mental health?",
+        "answer": {
+          "answer_summary": "The patient's current medications for mental health are not mentioned in the provided record. The document states that the patient was unable to answer when asked if he was taking any medication.",
+          "reasoning": "The provided medical record does not contain a list of the patient's current medications. Instead, it explicitly states on two separate occasions that the patient was unable to answer when asked about his medications. Element E_0006 on page 4 describes the direct interaction where the patient did not reply when asked about his medicine. Element E_0006 on page 7 reiterates this in the doctor's summary, stating the patient was 'not able to answer a question as to whether he is currently on medication.'",
+          "matched_elements": [
+            {
+              "element_id": "E_0006",
+              "type": "clinical_paragraph",
+              "content": "I asked him whether he knew what medical problems he had. Mr Tan just stared at me blankly and shook his head. I asked him whether he remembered being in hospital before. Mr Tan nodded. I asked him if he knew what he was in hospital for. Mr Tan shook his head. I asked him if he was taking any medicine at the moment. Mr Tan just looked at me blankly and did not reply.",
+              "page_number": 4,
+              "bbox_pixel": [
+                176.0,
+                472.0,
+                880.0,
+                560.0
+              ],
+              "bbox_pdf": [
+                63.36000025978689,
+                640.0799944300852,
+                316.80000129893443,
+                671.7599941544088
+              ],
+              "relevance": "This element explicitly states that when the patient was asked if he was taking any medicine, he did not reply."
+            },
+            {
+              "element_id": "E_0006",
+              "type": "clinical_paragraph",
+              "content": "Since he is unable to understand, retain, use or weigh simple information, due to his memory deficits and cognitive failures, he will not be able to make decisions about his personal and financial affairs, which would require being able to process such information. This is also demonstrated by his inability to remember basic information on the property he owns with his elderly mother, and also his inability to make a realistic and concrete plan for what to do with the property. He was also not able to remember what medical problems he has, and not able to answer a question as to whether he is currently on medication.",
+              "page_number": 7,
+              "bbox_pixel": [
+                179.0,
+                356.0,
+                879.0,
+                499.0
+              ],
+              "bbox_pdf": [
+                64.44000026421507,
+                662.0399942389913,
+                316.44000129745837,
+                713.5199937910173
+              ],
+              "relevance": "This element summarizes the doctor's opinion, noting the patient's inability to answer a question about his current medication."
+            }
+          ],
+          "filter_stats": {
+            "original_elements": 131,
+            "filtered_elements": 88,
+            "reduction_ratio": "1.5x"
+          }
+        }
+      },
+      {
+        "question_id": "q4",
+        "question": "What recommendations or treatment plan is suggested?",
+        "answer": {
+          "answer_summary": "No specific medical treatment plan is recommended. The doctor's opinion is that the patient's cognitive functions are unlikely to improve and will most likely worsen over time, as there is no treatment that can reverse his dementia. The report establishes that the patient is unable to make decisions about his personal and financial affairs, implying a need for these to be managed by a deputy.",
+          "reasoning": "The EHR does not contain a specific medical treatment plan with medications or therapies. Instead, it provides a prognosis and an opinion on the patient's mental capacity, which forms the basis for the recommended course of action. The key element states that there is no treatment to reverse the patient's dementia and that his cognitive functions are expected to worsen. The implied recommendation, based on the entire report's context of assessing mental capacity, is the management of his personal and financial affairs by another party, as he is deemed unable to make these decisions himself.",
+          "matched_elements": [
+            {
+              "element_id": "E_0007",
+              "type": "clinical_paragraph",
+              "content": "In my view, his cognitive functions are unlikely to improve and would most likely get worse over time, as there is no treatment which can reverse his dementia.",
+              "page_number": 7,
+              "bbox_pixel": [
+                179.0,
+                523.0,
+                879.0,
+                560.0
+              ],
+              "bbox_pdf": [
+                64.44000026421507,
+                640.0799944300852,
+                316.44000129745837,
+                653.3999943141757
+              ],
+              "relevance": "This element explicitly states the prognosis and the lack of a curative treatment for the patient's dementia."
+            },
+            {
+              "element_id": "E_0006",
+              "type": "clinical_paragraph",
+              "content": "Since he is unable to understand, retain, use or weigh simple information, due to his memory deficits and cognitive failures, he will not be able to make decisions about his personal and financial affairs, which would require being able to process such information. This is also demonstrated by his inability to remember basic information on the property he owns with his elderly mother, and also his inability to make a realistic and concrete plan for what to do with the property. He was also not able to remember what medical problems he has, and not able to answer a question as to whether he is currently on medication.",
+              "page_number": 7,
+              "bbox_pixel": [
+                179.0,
+                356.0,
+                879.0,
+                499.0
+              ],
+              "bbox_pdf": [
+                64.44000026421507,
+                662.0399942389913,
+                316.44000129745837,
+                713.5199937910173
+              ],
+              "relevance": "This paragraph implies a recommendation for managing the patient's affairs due to his inability to make decisions, which is a key part of the plan of care for a patient who lacks mental capacity."
+            }
+          ],
+          "filter_stats": {
+            "original_elements": 131,
+            "filtered_elements": 86,
+            "reduction_ratio": "1.5x"
+          }
+        }
+      }
+    ]
+  }
+}

@@ -77,6 +77,10 @@ SAMPLE_DOCS_DIR.mkdir(parents=True, exist_ok=True)
 PRECOMPUTED_DIR = Path(os.getenv("PRECOMPUTED_DIR", "./precomputed_samples")).resolve()
 PRECOMPUTED_DIR.mkdir(parents=True, exist_ok=True)
 
+# Precomputed answers directory (checked into repo and copied into image)
+PRECOMPUTED_ANSWERS_DIR = Path(os.getenv("PRECOMPUTED_ANSWERS_DIR", "./precomputed_answers")).resolve()
+PRECOMPUTED_ANSWERS_DIR.mkdir(parents=True, exist_ok=True)
+
 # Precompute controls
 PRECOMPUTE_SAMPLES = os.getenv("PRECOMPUTE_SAMPLES", "false").lower() in {"1", "true", "yes", "y"}
 
@@ -364,6 +368,9 @@ async def root():
             "process_sample": "/sample-documents/{filename}/process (POST)",
             "ontology": "/documents/{id}/ontology (GET)",
             "query": "/documents/{id}/query (POST)",
+            "precomputed_answers_list": "/precomputed-answers (GET)",
+            "precomputed_answers_get": "/precomputed-answers/{document_id} (GET)",
+            "precomputed_answers_alt": "/documents/{document_id}/precomputed-answers (GET)",
             "docs": "/docs"
         },
         "notes": "Upload PDFs directly to /upload using multipart/form-data"
@@ -685,6 +692,98 @@ async def query_document(document_id: str, request: QueryBody):
     except Exception as e:
         logger.error(f"Query failed: {e}", exc_info=True)
         raise HTTPException(status_code=500, detail=f"Query failed: {str(e)}")
+
+
+@app.get("/precomputed-answers")
+async def list_precomputed_answers():
+    """
+    List all available precomputed answer files.
+    
+    Returns:
+        List of documents with precomputed answers, including metadata
+    """
+    answers = []
+    
+    if not PRECOMPUTED_ANSWERS_DIR.exists():
+        logger.warning(f"Precomputed answers directory not found: {PRECOMPUTED_ANSWERS_DIR}")
+        return {
+            "status": "success",
+            "total_documents": 0,
+            "documents": []
+        }
+    
+    # Find all _answers.json files
+    for answer_file in sorted(PRECOMPUTED_ANSWERS_DIR.glob("*_answers.json")):
+        try:
+            with open(answer_file, 'r') as f:
+                data = json.load(f)
+                # Extract document_id from filename (remove _answers.json suffix)
+                doc_id = answer_file.stem.replace("_answers", "")
+                answers.append({
+                    "document_id": doc_id,
+                    "filename": answer_file.name,
+                    "total_questions": data.get("total_questions", 0),
+                    "source_json": data.get("source_json", ""),
+                    "answers_url": f"/precomputed-answers/{doc_id}"
+                })
+        except Exception as e:
+            logger.warning(f"Error reading precomputed answers file {answer_file.name}: {e}")
+    
+    return {
+        "status": "success",
+        "total_documents": len(answers),
+        "documents": answers
+    }
+
+
+@app.get("/precomputed-answers/{document_id}")
+async def get_precomputed_answers(document_id: str):
+    """
+    Get precomputed answers for a specific document.
+    
+    Args:
+        document_id: The document ID (filename without .pdf extension)
+    
+    Returns:
+        Complete precomputed answers JSON with all questions, answers, and matched elements
+    """
+    # Try multiple filename patterns
+    possible_files = [
+        PRECOMPUTED_ANSWERS_DIR / f"{document_id}_answers.json",
+        PRECOMPUTED_ANSWERS_DIR / f"{document_id}.json",  # Fallback if naming differs
+    ]
+    
+    answer_file = None
+    for path in possible_files:
+        if path.exists():
+            answer_file = path
+            break
+    
+    if not answer_file or not answer_file.exists():
+        raise HTTPException(
+            status_code=404,
+            detail=f"Precomputed answers not found for document: {document_id}"
+        )
+    
+    try:
+        with open(answer_file, 'r') as f:
+            answers_data = json.load(f)
+        return answers_data
+    except Exception as e:
+        logger.error(f"Failed to load precomputed answers for {document_id}: {e}", exc_info=True)
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to load precomputed answers: {str(e)}"
+        )
+
+
+@app.get("/documents/{document_id}/precomputed-answers")
+async def get_document_precomputed_answers(document_id: str):
+    """
+    Alternative endpoint to get precomputed answers for a document.
+    This is a convenience endpoint that mirrors /precomputed-answers/{document_id}.
+    """
+    return await get_precomputed_answers(document_id)
 
 
 @app.get("/documents")

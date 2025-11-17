@@ -1,0 +1,557 @@
+{
+  "document_id": "Post-Op Colectomy Report",
+  "source_json": "Post-Op Colectomy Report_artifacts.json",
+  "total_questions": 5,
+  "questions": [
+    {
+      "question_id": "q1",
+      "question": "What surgical procedure was performed?",
+      "answer": {
+        "answer_summary": "The patient underwent a right colectomy on March 22, 20xx. The procedure is also described as a right hemicolectomy with a side-to-side ileocolic anastomosis. Additionally, a central venous pressure line was placed during the surgery.",
+        "reasoning": "The surgical procedure was identified from multiple sections across the record. The Discharge Summary on page 2 explicitly lists 'PROCEDURE PERFORMED: Right colectomy.' A more detailed description is provided on page 3, specifying the procedure as a 'right hemicolectomy with side-to-side anastomosis ileocolic variety' performed on 3/22/20xx, and also notes the placement of a central venous pressure line. The operative report summary on page 13 corroborates this with 'Right hemicolectomy with side-to-side anastomosis, ileocolic variety.' The consultation note on page 8 also confirms the patient is 'status post right-sided colectomy.'",
+        "matched_elements": [
+          {
+            "element_id": "E_0012",
+            "type": "section_header",
+            "content": "PROCEDURE PERFORMED: Right colectomy.",
+            "page_number": 2,
+            "bbox_pixel": [
+              145.0,
+              346.0,
+              530.0,
+              360.0
+            ],
+            "bbox_pdf": [
+              52.2,
+              662.4,
+              190.8,
+              667.44
+            ],
+            "relevance": "This element explicitly states the procedure performed was a right colectomy."
+          },
+          {
+            "element_id": "E_0014",
+            "type": "clinical_paragraph",
+            "content": "On 3/22/20xx, the patient was taken to the OR for a right colectomy. Summary of the\nprocedure is right hemicolectomy with side-to-side anastomosis ileocolic variety. Please\nsee Op Note for further details. It should be noted that a central venous pressure line was\nalso placed. Pathology did reveal invasive moderately differentiated adenocarcinoma of\nthe colon. No involvement of the surgical margin. Thirty-five lymph nodes negative.\nPostoperatively, the patient's condition was satisfactory. She was alert, vital signs stable.\nThe patient continued to be followed. She had moderate drainage in her J-vac drain but\ncontinued stable and progressing satisfactorily. By 3/24/20xx, she was out of bed, lungs\nclear. She continued to improve. She was discharged to home on 3/30/20xx with the\nfollowing instructions:",
+            "page_number": 3,
+            "bbox_pixel": [
+              147.0,
+              485.0,
+              840.0,
+              646.0
+            ],
+            "bbox_pdf": [
+              52.92,
+              559.44,
+              302.40000000000003,
+              617.4
+            ],
+            "relevance": "This paragraph provides a detailed summary of the surgical procedure, including the date, specific name (right hemicolectomy with side-to-side anastomosis), and an additional procedure (central venous pressure line placement)."
+          },
+          {
+            "element_id": "E_0006",
+            "type": "clinical_paragraph",
+            "content": "Right hemicolectomy with side-to-side anastomosis, ileocolic variety.",
+            "page_number": 13,
+            "bbox_pixel": [
+              147.0,
+              323.0,
+              692.0,
+              339.0
+            ],
+            "bbox_pdf": [
+              52.92,
+              669.96,
+              249.12,
+              675.72
+            ],
+            "relevance": "This element, from the operative report summary, provides a concise and specific description of the surgical procedure."
+          },
+          {
+            "element_id": "E_0005",
+            "type": "list_items",
+            "content": "1. Colon cancer T3-NO-MX status post right-sided colectomy.",
+            "page_number": 8,
+            "bbox_pixel": [
+              118.0,
+              170.0,
+              700.0,
+              185.0
+            ],
+            "bbox_pdf": [
+              42.480000000000004,
+              725.4,
+              252.0,
+              730.8
+            ],
+            "relevance": "This impression confirms that a right-sided colectomy was performed."
+          }
+        ],
+        "filter_stats": {
+          "original_elements": 234,
+          "filtered_elements": 165,
+          "reduction_ratio": "1.4x"
+        }
+      }
+    },
+    {
+      "question_id": "q2",
+      "question": "What was the indication or reason for the colectomy procedure?",
+      "answer": {
+        "answer_summary": "The indication for the colectomy procedure was a colon lesion, which was diagnosed as colon cancer. Several notes confirm this:\n- Admitting Diagnosis: \"Colon lesion\" (E_0011, pg 2)\n- History: A colonoscopy revealed a \"colon lesion\" (E_0013, pg 2) and showed \"right-sided colon carcinoma\" (E_0013, pg 6).\n- Impression: \"Colon cancer status post colonoscopy and biopsy\" (E_0006, pg 5).\n- Reason for Consultation: \"Colon cancer\" (E_0011, pg 6).",
+        "reasoning": "The patient's records consistently indicate that the colectomy was performed to treat a colon lesion discovered during a colonoscopy. This lesion was diagnosed as colon cancer (specifically, right-sided colon carcinoma and adenocarcinoma). The admitting diagnosis, history of present illness, and impression sections across multiple notes confirm this indication.",
+        "matched_elements": [
+          {
+            "element_id": "E_0011",
+            "type": "list_items",
+            "content": "1. Colon lesion.\n2. Anemia.\n3. Prior skin cancer.",
+            "page_number": 2,
+            "bbox_pixel": [
+              145.0,
+              290.0,
+              350.0,
+              330.0
+            ],
+            "bbox_pdf": [
+              52.2,
+              673.2,
+              126.0,
+              687.6
+            ],
+            "relevance": "Lists 'Colon lesion' as the primary admitting diagnosis, which is the reason for the subsequent workup and procedure."
+          },
+          {
+            "element_id": "E_0013",
+            "type": "clinical_paragraph",
+            "content": "The patient is a 56-year-old black female who came to the office with a low blood count\nand change in bowel habits. She had a colonoscopy at Main Town Medical Center, which\nrevealed a colon lesion. The patient has a history of basal cell carcinoma on the hand and\none lesion that turned out to be melanoma. These were all excised and the patient is\ncurrently NED.",
+            "page_number": 2,
+            "bbox_pixel": [
+              145.0,
+              380.0,
+              855.0,
+              460.0
+            ],
+            "bbox_pdf": [
+              52.2,
+              626.4,
+              307.8,
+              655.2
+            ],
+            "relevance": "This paragraph explicitly states that a colonoscopy revealed a colon lesion, which prompted the admission and procedure."
+          },
+          {
+            "element_id": "E_0006",
+            "type": "list_items",
+            "content": "1. Colon cancer status post colonoscopy and biopsy.",
+            "page_number": 5,
+            "bbox_pixel": [
+              144.0,
+              326.0,
+              690.0,
+              340.0
+            ],
+            "bbox_pdf": [
+              51.84,
+              669.6,
+              248.4,
+              674.64
+            ],
+            "relevance": "The 'Impression' section identifies 'Colon cancer' as the diagnosis leading to the planned colectomy."
+          },
+          {
+            "element_id": "E_0011",
+            "type": "clinical_paragraph",
+            "content": "REASON FOR CONSULTATION: Colon cancer",
+            "page_number": 6,
+            "bbox_pixel": [
+              147.0,
+              240.0,
+              550.0,
+              255.0
+            ],
+            "bbox_pdf": [
+              52.92,
+              700.2,
+              198.0,
+              705.6
+            ],
+            "relevance": "The consultation note explicitly states the reason for the consult is 'Colon cancer'."
+          },
+          {
+            "element_id": "E_0013",
+            "type": "clinical_paragraph",
+            "content": "The patient is a 56 year-old lady with a history of diabetes mellitus, hypertension, and\nhypercholesterolemia, who presents with newly diagnosed colon cancer. The patient\nstarted to feel fatigued and then was found to be anemic seen on laboratory data, about\nsix months ago. The patient then had a colonoscopy on March 3, 20xx which showed the\npatient had right-sided colon carcinoma. The patient then was seen by Dr. Ensee and had\na right-sided colectomy on March 22, 20xx. Prior to the surgery the patient had left sided\nabdominal pain. She went through surgery without complications. The patient now has\nmild pain at the surgical site. The patient denies any weight loss. The patient's primary\ncare physician is Dr. Tesha.",
+            "page_number": 6,
+            "bbox_pixel": [
+              147.0,
+              298.0,
+              849.0,
+              449.0
+            ],
+            "bbox_pdf": [
+              52.92,
+              630.36,
+              305.64,
+              684.72
+            ],
+            "relevance": "This paragraph directly links the diagnosis of 'newly diagnosed colon cancer' and 'right-sided colon carcinoma' from a colonoscopy to the performance of a right-sided colectomy."
+          },
+          {
+            "element_id": "E_0005",
+            "type": "list_items",
+            "content": "1. Colon cancer T3-NO-MX status post right-sided colectomy.",
+            "page_number": 8,
+            "bbox_pixel": [
+              118.0,
+              170.0,
+              700.0,
+              185.0
+            ],
+            "bbox_pdf": [
+              42.480000000000004,
+              725.4,
+              252.0,
+              730.8
+            ],
+            "relevance": "The impression states the patient's diagnosis is 'Colon cancer' and notes she is 'status post right-sided colectomy', confirming the reason for the surgery."
+          }
+        ],
+        "filter_stats": {
+          "original_elements": 234,
+          "filtered_elements": 152,
+          "reduction_ratio": "1.5x"
+        }
+      }
+    },
+    {
+      "question_id": "q3",
+      "question": "What were the post-operative findings or complications?",
+      "answer": {
+        "answer_summary": "Post-operatively, the patient's condition was satisfactory. The surgery was noted to be without complications. Findings included:\n\n- **General Condition:** Alert with stable vital signs, progressing satisfactorily.\n- **Surgical Site:** Mild pain and mild tenderness at the right quadrant surgical site. The abdomen was non-distended.\n- **Drainage:** Moderate drainage in the J-vac drain.\n- **Pathology Findings:** Invasive moderately differentiated adenocarcinoma of the colon. The surgical margins were not involved, and thirty-five lymph nodes were negative for cancer.\n- **Cancer Staging:** The TNM classification was pT3 pN0 (also noted as T3-N0-MX).",
+        "reasoning": "The answer was compiled from several sections describing the patient's condition after her right colectomy. The discharge summary on page 3 provides a detailed overview of her post-operative course, including her satisfactory condition, drainage from the J-vac drain, and key pathology results. A consultation note on page 6 explicitly states the surgery was without complications but notes mild pain at the surgical site. A physical exam on page 7 confirms mild tenderness at the surgical site. Finally, the impression and plan on page 8 and the pathology report on page 15 provide the post-operative cancer staging.",
+        "matched_elements": [
+          {
+            "element_id": "E_0014",
+            "type": "clinical_paragraph",
+            "content": "On 3/22/20xx, the patient was taken to the OR for a right colectomy. Summary of the\nprocedure is right hemicolectomy with side-to-side anastomosis ileocolic variety. Please\nsee Op Note for further details. It should be noted that a central venous pressure line was\nalso placed. Pathology did reveal invasive moderately differentiated adenocarcinoma of\nthe colon. No involvement of the surgical margin. Thirty-five lymph nodes negative.\nPostoperatively, the patient's condition was satisfactory. She was alert, vital signs stable.\nThe patient continued to be followed. She had moderate drainage in her J-vac drain but\ncontinued stable and progressing satisfactorily. By 3/24/20xx, she was out of bed, lungs\nclear. She continued to improve. She was discharged to home on 3/30/20xx with the\nfollowing instructions:",
+            "page_number": 3,
+            "bbox_pixel": [
+              147.0,
+              485.0,
+              840.0,
+              646.0
+            ],
+            "bbox_pdf": [
+              52.92,
+              559.44,
+              302.40000000000003,
+              617.4
+            ],
+            "relevance": "This element details the patient's post-operative condition, noting it was satisfactory with stable vital signs, moderate drainage from a J-vac drain, and general improvement. It also provides the key pathology findings: invasive moderately differentiated adenocarcinoma, negative surgical margins, and 35 negative lymph nodes."
+          },
+          {
+            "element_id": "E_0013",
+            "type": "clinical_paragraph",
+            "content": "The patient is a 56 year-old lady with a history of diabetes mellitus, hypertension, and\nhypercholesterolemia, who presents with newly diagnosed colon cancer. The patient\nstarted to feel fatigued and then was found to be anemic seen on laboratory data, about\nsix months ago. The patient then had a colonoscopy on March 3, 20xx which showed the\npatient had right-sided colon carcinoma. The patient then was seen by Dr. Ensee and had\na right-sided colectomy on March 22, 20xx. Prior to the surgery the patient had left sided\nabdominal pain. She went through surgery without complications. The patient now has\nmild pain at the surgical site. The patient denies any weight loss. The patient's primary\ncare physician is Dr. Tesha.",
+            "page_number": 6,
+            "bbox_pixel": [
+              147.0,
+              298.0,
+              849.0,
+              449.0
+            ],
+            "bbox_pdf": [
+              52.92,
+              630.36,
+              305.64,
+              684.72
+            ],
+            "relevance": "This element explicitly states the patient went through surgery 'without complications' and notes a post-operative finding of 'mild pain at the surgical site'."
+          },
+          {
+            "element_id": "E_0012",
+            "type": "clinical_paragraph",
+            "content": "ABDOMEN: Mildly tender at the right quadrant at the surgical site. It was non-distended.\nNo hepatosplenomegaly appreciated.",
+            "page_number": 7,
+            "bbox_pixel": [
+              147.0,
+              412.0,
+              840.0,
+              443.0
+            ],
+            "bbox_pdf": [
+              52.92,
+              632.52,
+              302.40000000000003,
+              643.6800000000001
+            ],
+            "relevance": "This physical exam finding describes the abdomen post-operatively as 'Mildly tender at the right quadrant at the surgical site'."
+          },
+          {
+            "element_id": "E_0005",
+            "type": "list_items",
+            "content": "1. Colon cancer T3-NO-MX status post right-sided colectomy.",
+            "page_number": 8,
+            "bbox_pixel": [
+              118.0,
+              170.0,
+              700.0,
+              185.0
+            ],
+            "bbox_pdf": [
+              42.480000000000004,
+              725.4,
+              252.0,
+              730.8
+            ],
+            "relevance": "This element provides the post-operative staging of the colon cancer as T3-N0-MX."
+          },
+          {
+            "element_id": "E_0012",
+            "type": "clinical_paragraph",
+            "content": "The TNM classification is pT3 pN0.",
+            "page_number": 15,
+            "bbox_pixel": [
+              144.0,
+              739.0,
+              403.0,
+              752.0
+            ],
+            "bbox_pdf": [
+              51.84,
+              521.28,
+              145.08,
+              525.96
+            ],
+            "relevance": "This element from the pathology report provides the final post-operative TNM classification as pT3 pN0."
+          }
+        ],
+        "filter_stats": {
+          "original_elements": 234,
+          "filtered_elements": 165,
+          "reduction_ratio": "1.4x"
+        }
+      }
+    },
+    {
+      "question_id": "q4",
+      "question": "What is the post-operative plan or follow-up care?",
+      "answer": {
+        "answer_summary": "The post-operative plan for the patient includes:\n\nDischarge Instructions (as of 3/30/20xx):\n- Care for J-vac drain and record the amount at home.\n- Resume prehospital medications.\n\nFollow-up Appointments:\n- Office appointment on the Tuesday following discharge.\n- Appointment with Dr. Platin in 2 weeks to begin chemotherapy.\n\nFurther Workup and Treatment Plan:\n- Check iron study, CEA, and perform a CAT scan of the chest, abdomen, and pelvis.\n- The patient has agreed to adjuvant chemotherapy, which is planned to be CPT 11 and 5FU for a duration of six months, pending the results of the CAT scan.",
+        "reasoning": "The post-operative plan and follow-up care were found in two main sections. The discharge summary on page 3 lists the immediate discharge instructions, including drain care, follow-up appointments, and resuming medications. A more detailed long-term plan is outlined in the consultation report's 'Impression and Plan' section on page 8, which specifies further diagnostic workup (scans and labs) and the proposed adjuvant chemotherapy regimen.",
+        "matched_elements": [
+          {
+            "element_id": "E_0014",
+            "type": "clinical_paragraph",
+            "content": "On 3/22/20xx, the patient was taken to the OR for a right colectomy. Summary of the\nprocedure is right hemicolectomy with side-to-side anastomosis ileocolic variety. Please\nsee Op Note for further details. It should be noted that a central venous pressure line was\nalso placed. Pathology did reveal invasive moderately differentiated adenocarcinoma of\nthe colon. No involvement of the surgical margin. Thirty-five lymph nodes negative.\nPostoperatively, the patient's condition was satisfactory. She was alert, vital signs stable.\nThe patient continued to be followed. She had moderate drainage in her J-vac drain but\ncontinued stable and progressing satisfactorily. By 3/24/20xx, she was out of bed, lungs\nclear. She continued to improve. She was discharged to home on 3/30/20xx with the\nfollowing instructions:",
+            "page_number": 3,
+            "bbox_pixel": [
+              147.0,
+              485.0,
+              840.0,
+              646.0
+            ],
+            "bbox_pdf": [
+              52.92,
+              559.44,
+              302.40000000000003,
+              617.4
+            ],
+            "relevance": "This element states that the patient was discharged with instructions, which constitute the post-operative plan."
+          },
+          {
+            "element_id": "E_0015",
+            "type": "list_items",
+            "content": "1. Teach patient to care for J-vac drain and record amount at home.",
+            "page_number": 3,
+            "bbox_pixel": [
+              147.0,
+              661.0,
+              675.0,
+              675.0
+            ],
+            "bbox_pdf": [
+              52.92,
+              549.0,
+              243.0,
+              554.04
+            ],
+            "relevance": "This is a specific post-operative instruction regarding drain care."
+          },
+          {
+            "element_id": "E_0016",
+            "type": "list_items",
+            "content": "2. Office appointment Tuesday.",
+            "page_number": 3,
+            "bbox_pixel": [
+              147.0,
+              680.0,
+              402.0,
+              694.0
+            ],
+            "bbox_pdf": [
+              52.92,
+              542.16,
+              144.72,
+              547.2
+            ],
+            "relevance": "This is a specific follow-up appointment."
+          },
+          {
+            "element_id": "E_0017",
+            "type": "list_items",
+            "content": "3. Appointment with Dr. Platin in 2 weeks. She is scheduled to begin chemotherapy.",
+            "page_number": 3,
+            "bbox_pixel": [
+              147.0,
+              699.0,
+              809.0,
+              713.0
+            ],
+            "bbox_pdf": [
+              52.92,
+              535.3199999999999,
+              291.24,
+              540.36
+            ],
+            "relevance": "This details a follow-up appointment with a specialist and the plan to start chemotherapy."
+          },
+          {
+            "element_id": "E_0018",
+            "type": "list_items",
+            "content": "4. Resume prehospital medications.",
+            "page_number": 3,
+            "bbox_pixel": [
+              147.0,
+              718.0,
+              459.0,
+              732.0
+            ],
+            "bbox_pdf": [
+              52.92,
+              528.48,
+              165.24,
+              533.52
+            ],
+            "relevance": "This is a post-operative medication instruction."
+          },
+          {
+            "element_id": "E_0008",
+            "type": "clinical_paragraph",
+            "content": "The patient is a 56 year-old lady with a history of diabetes mellitus, hypertension, and hypercholesterolemia, who presents with newly diagnosed colon cancer status post right-sided colectomy. She presents with a T3-NO- MX adenocarcinoma of the colon status post right-sided colectomy. I will go ahead and check the iron study, CEA and CAT scan of the chest, abdomen and pelvis for further workup. If the patient turns out to have localized disease with T3-NO-MO the five-year of survival would be about 70-75%. Adjuvant chemotherapy in this setting would decrease the recurrence rate by about 30% with a trend of better survival. Considering the patient's younger age and moderately differentiated adenocarcinoma, the patient may benefit from management treatment_with a CPT 11 and 5FU of six months duration. The patient, at the present time, agrees with further chemotherapy. I will wait for the CAT scan results.",
+            "page_number": 8,
+            "bbox_pixel": [
+              146.0,
+              260.0,
+              840.0,
+              440.0
+            ],
+            "bbox_pdf": [
+              52.56,
+              633.6,
+              302.40000000000003,
+              698.4
+            ],
+            "relevance": "This paragraph from the consultation report details the comprehensive post-operative plan, including further workup (iron study, CEA, CAT scan) and the proposed chemotherapy regimen (CPT 11 and 5FU for six months)."
+          }
+        ],
+        "filter_stats": {
+          "original_elements": 234,
+          "filtered_elements": 152,
+          "reduction_ratio": "1.5x"
+        }
+      }
+    },
+    {
+      "question_id": "q5",
+      "question": "What was the patient's condition at discharge?",
+      "answer": {
+        "answer_summary": "The patient's condition at discharge was satisfactory. She was alert, her vital signs were stable, and she was progressing well. She was discharged to home on 3/30/20xx with the following instructions:\n- Care for her J-vac drain and record the amount at home.\n- Attend an office appointment on the following Tuesday.\n- Schedule an appointment with Dr. Platin in 2 weeks to begin chemotherapy.\n- Resume her prehospital medications.",
+        "reasoning": "The patient's condition at discharge is detailed in the Discharge Summary on page 3. The summary states that postoperatively, the patient's condition was satisfactory, she was alert with stable vital signs, and was progressing satisfactorily. She was discharged on 3/30/20xx with several instructions, including caring for a J-vac drain, follow-up appointments, and resuming her medications.",
+        "matched_elements": [
+          {
+            "element_id": "E_0014",
+            "type": "clinical_paragraph",
+            "content": "On 3/22/20xx, the patient was taken to the OR for a right colectomy. Summary of the\nprocedure is right hemicolectomy with side-to-side anastomosis ileocolic variety. Please\nsee Op Note for further details. It should be noted that a central venous pressure line was\nalso placed. Pathology did reveal invasive moderately differentiated adenocarcinoma of\nthe colon. No involvement of the surgical margin. Thirty-five lymph nodes negative.\nPostoperatively, the patient's condition was satisfactory. She was alert, vital signs stable.\nThe patient continued to be followed. She had moderate drainage in her J-vac drain but\ncontinued stable and progressing satisfactorily. By 3/24/20xx, she was out of bed, lungs\nclear. She continued to improve. She was discharged to home on 3/30/20xx with the\nfollowing instructions:",
+            "page_number": 3,
+            "bbox_pixel": [
+              147.0,
+              485.0,
+              840.0,
+              646.0
+            ],
+            "bbox_pdf": [
+              52.92,
+              559.44,
+              302.40000000000003,
+              617.4
+            ],
+            "relevance": "This paragraph explicitly states the patient's condition was satisfactory, she was alert with stable vital signs, and was progressing satisfactorily before being discharged to home on 3/30/20xx."
+          },
+          {
+            "element_id": "E_0015",
+            "type": "list_items",
+            "content": "1. Teach patient to care for J-vac drain and record amount at home.",
+            "page_number": 3,
+            "bbox_pixel": [
+              147.0,
+              661.0,
+              675.0,
+              675.0
+            ],
+            "bbox_pdf": [
+              52.92,
+              549.0,
+              243.0,
+              554.04
+            ],
+            "relevance": "This is a discharge instruction, indicating the patient was discharged with a J-vac drain requiring home care."
+          },
+          {
+            "element_id": "E_0017",
+            "type": "list_items",
+            "content": "3. Appointment with Dr. Platin in 2 weeks. She is scheduled to begin chemotherapy.",
+            "page_number": 3,
+            "bbox_pixel": [
+              147.0,
+              699.0,
+              809.0,
+              713.0
+            ],
+            "bbox_pdf": [
+              52.92,
+              535.3199999999999,
+              291.24,
+              540.36
+            ],
+            "relevance": "This discharge instruction indicates the plan for follow-up care, including starting chemotherapy."
+          },
+          {
+            "element_id": "E_0018",
+            "type": "list_items",
+            "content": "4. Resume prehospital medications.",
+            "page_number": 3,
+            "bbox_pixel": [
+              147.0,
+              718.0,
+              459.0,
+              732.0
+            ],
+            "bbox_pdf": [
+              52.92,
+              528.48,
+              165.24,
+              533.52
+            ],
+            "relevance": "This is a discharge instruction regarding the patient's medications."
+          }
+        ],
+        "filter_stats": {
+          "original_elements": 234,
+          "filtered_elements": 168,
+          "reduction_ratio": "1.4x"
+        }
+      }
+    }
+  ]
+}

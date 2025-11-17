@@ -84,6 +84,9 @@ COPY --chown=ehrx:ehrx SampleEHR_docs/ ./SampleEHR_docs/
 # Copy precomputed samples (if present) into image
 COPY --chown=ehrx:ehrx precomputed_samples/ ./precomputed_samples/
 
+# Copy precomputed answers (if present) into image
+COPY --chown=ehrx:ehrx precomputed_answers/ ./precomputed_answers/
+
 COPY --chown=ehrx:ehrx app.py run_mvp_pipeline.py test.py test_query_only.py ./
 COPY --chown=ehrx:ehrx setup.py ./
 

@@ -1,0 +1,215 @@
+{
+  "document_id": "Complete History and Physical Write-Up",
+  "source_json": "Complete History and Physical Write-Up_artifacts.json",
+  "total_questions": 5,
+  "questions": [
+    {
+      "question_id": "q1",
+      "question": "What are the patient's vital signs?",
+      "answer": {
+        "answer_summary": "The patient's vital signs are as follows:\n- Temperature: 100.2\n- Pulse: 96, regular with occasional extra beat\n- Respiration: 24\n- Blood Pressure: 180/100 lying down",
+        "reasoning": "The patient's vital signs were found in a list item under the 'Physical Exam' section on page 3. The element explicitly details the temperature, pulse, respiration rate, and blood pressure.",
+        "matched_elements": [
+          {
+            "element_id": "E_0003",
+            "type": "list_items",
+            "content": "1. Vital Signs: temperature 100.2 Pulse 96 regular with occasional extra beat, respiration 24, blood pressure 180/100 lying down",
+            "page_number": 3,
+            "bbox_pixel": [
+              142.0,
+              190.0,
+              847.0,
+              217.0
+            ],
+            "bbox_pdf": [
+              51.120000000000005,
+              713.88,
+              304.92,
+              723.6
+            ],
+            "relevance": "This element explicitly lists the patient's vital signs."
+          }
+        ],
+        "filter_stats": {
+          "original_elements": 61,
+          "filtered_elements": 60,
+          "reduction_ratio": "1.0x"
+        }
+      }
+    },
+    {
+      "question_id": "q2",
+      "question": "What is the patient's weight and height?",
+      "answer": {
+        "answer_summary": "According to the record, the patient's weight is 160 lbs and their height is 5'8\".",
+        "reasoning": "The user's question specifically asked for the patient's weight and height. The content of element E_0003 is 'weight is stable at 160 lbs, height 5'8\"', directly providing the requested information.",
+        "matched_elements": [
+          {
+            "element_id": "E_0003",
+            "type": "list_items",
+            "content": "1.Constitutional: energy level generally good, weight is stable at 160 lbs, height 5'8\"",
+            "page_number": 2,
+            "bbox_pixel": [
+              147.0,
+              140.0,
+              709.0,
+              154.0
+            ],
+            "bbox_pdf": [
+              52.92,
+              736.56,
+              255.24,
+              741.6
+            ],
+            "relevance": "This element explicitly states the patient's weight and height."
+          }
+        ],
+        "filter_stats": {
+          "original_elements": 61,
+          "filtered_elements": 59,
+          "reduction_ratio": "1.0x"
+        }
+      }
+    },
+    {
+      "question_id": "q3",
+      "question": "What screening procedures has the patient undergone, and when were they last performed?",
+      "answer": {
+        "answer_summary": "The patient has undergone the following screening procedures:\n- Last mammogram: 1994\n- Flexible Sigmoidoscopy: 1997\n- Colonoscopy: Around 1980 (following a hospital admission for a GI bleed)",
+        "reasoning": "The patient's screening history was found in the 'Systems Review' section of the note. One list item explicitly states the dates of the last mammogram and flexible sigmoidoscopy. Another list item under the G.I. section describes a colonoscopy that was performed after a hospital admission in 1980.",
+        "matched_elements": [
+          {
+            "element_id": "E_0001",
+            "type": "list_items",
+            "content": "4) Last mammogram 1994, Flexible Sigmoidoscopy 1997",
+            "page_number": 2,
+            "bbox_pixel": [
+              265.0,
+              90.0,
+              644.0,
+              104.0
+            ],
+            "bbox_pdf": [
+              95.4,
+              754.56,
+              231.84,
+              759.6
+            ],
+            "relevance": "This element explicitly states the date of the patient's last mammogram (1994) and flexible sigmoidoscopy (1997)."
+          },
+          {
+            "element_id": "E_0014",
+            "type": "list_items",
+            "content": "6.G.I.: Admitted to CPMC in 1980 after two days of melena and hematemesis. Upper G.I. series was negative but endoscopy showed evidence of gastritis, presumed to be caused by ibuprofen intake. Her hematocrit was 24% on admission and she received four units of packed cells. Colonoscopy revealed multiple diverticuli. Since then her stool has been brown and consistently hematest negative when checked in clinic. Several months after this admission she was noted to be mildly jaundiced and had elevated liver enzymes, at this time it was realized that she contracted hepatitis B from the transfusions. Since then she has not had any evidence of chronic hepatitis.",
+            "page_number": 2,
+            "bbox_pixel": [
+              147.0,
+              380.0,
+              709.0,
+              523.0
+            ],
+            "bbox_pdf": [
+              52.92,
+              603.72,
+              255.24,
+              655.2
+            ],
+            "relevance": "This element mentions that the patient had a colonoscopy following a hospital admission in 1980."
+          }
+        ],
+        "filter_stats": {
+          "original_elements": 61,
+          "filtered_elements": 60,
+          "reduction_ratio": "1.0x"
+        }
+      }
+    },
+    {
+      "question_id": "q4",
+      "question": "What medications or treatments are currently being continued for the patient?",
+      "answer": {
+        "answer_summary": "Based on the patient's treatment plan, the following medications and treatments are being continued or administered:\n- Aspirin\n- Heparin\n- Nitrates\n- Beta blockers\n- Nasal oxygen\n- ACE inhibitor therapy\n- Bactrim (to be started for a presumed UTI)\n\nAdditionally, the patient has received thrombolysis therapy for the acute myocardial infarction.",
+        "reasoning": "The answer was found in the 'Plan' and 'Impression' sections of the document. The 'Plan' section explicitly lists the medications and treatments to be continued, including aspirin, heparin, nitrates, beta blockers, nasal oxygen, and ACE inhibitor therapy. It also mentions starting Bactrim. The 'Impression' section notes that the patient has already received thrombolysis therapy.",
+        "matched_elements": [
+          {
+            "element_id": "E_0007",
+            "type": "list_items",
+            "content": "1.Continue aspirin, heparin, nitrates, beta blockers, nasal oxygen. Follow serial physical exams, EKGs, and labs.2. Obtain echocardiogram to assess post MI heart function and murmurs heard on cardiac exam. If LV ejection fraction is preserved, to start early beta blocker therapy.3. Continue ACE inhibitor therapy, and monitor blood pressure.4. Dysuria and pyuria- probable recurrent cystitis, as she is afebrile and without costovertebral tenderness. Start Bactrim treatment for presumed uncomplicated urinary tract infection and follow up on urine culture result.",
+            "page_number": 4,
+            "bbox_pixel": [
+              147.0,
+              465.0,
+              840.0,
+              559.0
+            ],
+            "bbox_pdf": [
+              52.92,
+              590.76,
+              302.40000000000003,
+              624.6
+            ],
+            "relevance": "This element explicitly lists the medications and treatments to be continued or started as part of the patient's current plan."
+          },
+          {
+            "element_id": "E_0005",
+            "type": "list_items",
+            "content": "1. Acute antelorateral myocardioal infarction, complicated by mild left ventricular dysfunction. Patient has received thrombolysis therapy.2. Hypertension3. Dysuria - 3+ bacteria in urine with pyuria",
+            "page_number": 4,
+            "bbox_pixel": [
+              147.0,
+              354.0,
+              688.0,
+              410.0
+            ],
+            "bbox_pdf": [
+              52.92,
+              644.4,
+              247.68,
+              664.56
+            ],
+            "relevance": "This element mentions that the patient has received thrombolysis therapy as part of her treatment."
+          }
+        ],
+        "filter_stats": {
+          "original_elements": 61,
+          "filtered_elements": 59,
+          "reduction_ratio": "1.0x"
+        }
+      }
+    },
+    {
+      "question_id": "q5",
+      "question": "What follow-up tests or procedures are recommended for this patient?",
+      "answer": {
+        "answer_summary": "The following follow-up tests and procedures are recommended for the patient:\n\n- Follow serial physical exams, EKGs, and labs.\n- Obtain an echocardiogram to assess post-MI heart function and murmurs.\n- Monitor blood pressure.\n- Follow up on urine culture results.",
+        "reasoning": "The answer was found in the 'Plan' section of the document. This section details the recommended follow-up tests, monitoring, and procedures for the patient's conditions.",
+        "matched_elements": [
+          {
+            "element_id": "E_0007",
+            "type": "list_items",
+            "content": "1.Continue aspirin, heparin, nitrates, beta blockers, nasal oxygen. Follow serial physical exams, EKGs, and labs.2. Obtain echocardiogram to assess post MI heart function and murmurs heard on cardiac exam. If LV ejection fraction is preserved, to start early beta blocker therapy.3. Continue ACE inhibitor therapy, and monitor blood pressure.4. Dysuria and pyuria- probable recurrent cystitis, as she is afebrile and without costovertebral tenderness. Start Bactrim treatment for presumed uncomplicated urinary tract infection and follow up on urine culture result.",
+            "page_number": 4,
+            "bbox_pixel": [
+              147.0,
+              465.0,
+              840.0,
+              559.0
+            ],
+            "bbox_pdf": [
+              52.92,
+              590.76,
+              302.40000000000003,
+              624.6
+            ],
+            "relevance": "This element explicitly lists the planned follow-up tests and procedures."
+          }
+        ],
+        "filter_stats": {
+          "original_elements": 61,
+          "filtered_elements": 59,
+          "reduction_ratio": "1.0x"
+        }
+      }
+    }
+  ]
+}
