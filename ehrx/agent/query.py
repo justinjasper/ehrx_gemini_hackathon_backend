@@ -356,7 +356,7 @@ Only return the JSON object, nothing else."""
             })
 
         simplified_schema = {"elements": simplified_elements}
-        schema_json = json.dumps(simplified_schema, indent=2)
+        schema_json = json.dumps(simplified_schema, indent=2, ensure_ascii=False)
 
         # Debug logging
         self.logger.info(f"Sending {len(simplified_elements)} elements to Pro for reasoning")
@@ -414,6 +414,12 @@ Return your answer as a JSON object:
     "answer_summary": "CLEAR NATURAL LANGUAGE ANSWER with the actual extracted data formatted for readability. For example: 'The patient is taking 8 medications: 1) Aspirin 81mg daily, 2) Atorvastatin 80mg nightly, 3) Cephalexin 500mg twice daily...'"
 }}
 
+CRITICAL: When including content from the schema in your response:
+- ALL quotes in string values MUST be escaped as \\"
+- ALL newlines in string values MUST be escaped as \\n
+- ALL backslashes MUST be escaped as \\\\
+- Ensure all string values are properly quoted and escaped
+
 If no relevant elements are found, return empty elements list with explanation in reasoning.
 
 Only return the JSON object, nothing else."""
@@ -459,6 +465,24 @@ Only return the JSON object, nothing else."""
         max_retries = 7
         last_error = None
         
+        def repair_json(text: str) -> str:
+            """
+            Attempt to repair common JSON issues:
+            - Unescaped quotes in strings
+            - Unescaped newlines
+            - Missing commas
+            """
+            # Try to fix unescaped quotes in string values
+            # This is a simple heuristic - look for patterns like: "content": "text with "quotes" here"
+            import re
+            # Pattern to find string values that might have unescaped quotes
+            # This is tricky - we'll try a simple approach: escape quotes that appear inside string values
+            # But we need to be careful not to break valid JSON
+            
+            # For now, just return the text and let json.loads handle it
+            # If it fails, we'll try to extract and repair
+            return text
+        
         for attempt in range(1, max_retries + 1):
             try:
                 response = self.pro_model.generate_content(
@@ -466,9 +490,39 @@ Only return the JSON object, nothing else."""
                     generation_config=generation_config
                 )
 
-                # Parse JSON response (guaranteed valid due to response_schema, but sometimes fails)
-                result = json.loads(response.text)
-                return result
+                # Try to parse JSON response
+                try:
+                    result = json.loads(response.text)
+                    return result
+                except json.JSONDecodeError as parse_error:
+                    # If parsing fails, try to repair common issues
+                    self.logger.debug(f"JSON parse error: {parse_error}")
+                    self.logger.debug(f"Response text (first 500 chars): {response.text[:500]}")
+                    
+                    # Try to extract JSON from response if it's wrapped in markdown or other text
+                    text = response.text.strip()
+                    
+                    # Remove markdown code blocks if present
+                    if text.startswith("```"):
+                        # Extract JSON from markdown code block
+                        lines = text.split("\n")
+                        json_lines = []
+                        in_json = False
+                        for line in lines:
+                            if line.strip().startswith("```"):
+                                in_json = not in_json
+                                continue
+                            if in_json:
+                                json_lines.append(line)
+                        text = "\n".join(json_lines)
+                    
+                    # Try parsing again
+                    try:
+                        result = json.loads(text)
+                        return result
+                    except json.JSONDecodeError:
+                        # If still fails, re-raise the original error to trigger retry
+                        raise parse_error
                 
             except (json.JSONDecodeError, ValueError) as e:
                 last_error = e
