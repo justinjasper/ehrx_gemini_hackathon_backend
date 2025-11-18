@@ -94,6 +94,8 @@ class VLMClient:
     ) -> VLMResponse:
         """
         Detect and extract elements from document page image.
+        
+        If MAX_TOKENS is hit, automatically splits page into regions and processes recursively.
 
         Args:
             image: Input image (file path, PIL Image, or numpy array)
@@ -104,6 +106,32 @@ class VLMClient:
 
         Raises:
             RuntimeError: If VLM API call fails after retries
+        """
+        return self._detect_elements_with_splitting(
+            image=image,
+            request=request,
+            region_offset_x=0,
+            region_offset_y=0,
+            recursion_depth=0
+        )
+
+    def _detect_elements_with_splitting(
+        self,
+        image: Union[str, Path, Image.Image, np.ndarray],
+        request: VLMRequest,
+        region_offset_x: int = 0,
+        region_offset_y: int = 0,
+        recursion_depth: int = 0
+    ) -> VLMResponse:
+        """
+        Detect elements with automatic region splitting on MAX_TOKENS.
+        
+        Args:
+            image: Input image
+            request: VLM request
+            region_offset_x: X offset for this region (for bounding box adjustment)
+            region_offset_y: Y offset for this region (for bounding box adjustment)
+            recursion_depth: Current recursion depth (for logging)
         """
         start_time = time.time()
 
@@ -117,12 +145,46 @@ class VLMClient:
         )
 
         # Generate response with retry logic
-        raw_response = self._generate_with_retry(
-            image_part=image_part,
-            prompt=prompt,
-            max_tokens=request.max_tokens,
-            temperature=request.temperature,
-        )
+        raw_response = None
+        finish_reason = None
+        try:
+            raw_response, finish_reason = self._generate_with_retry(
+                image_part=image_part,
+                prompt=prompt,
+                max_tokens=request.max_tokens,
+                temperature=request.temperature,
+            )
+        except ValueError as e:
+            # JSON parse error - check if it's due to MAX_TOKENS truncation
+            error_str = str(e).lower()
+            if "max_tokens" in error_str or "truncated" in error_str:
+                # Try region splitting
+                logger.warning(
+                    f"MAX_TOKENS hit at recursion depth {recursion_depth}. "
+                    f"Splitting page into regions..."
+                )
+                return self._process_with_region_splitting(
+                    image=image,
+                    request=request,
+                    region_offset_x=region_offset_x,
+                    region_offset_y=region_offset_y,
+                    recursion_depth=recursion_depth
+                )
+            raise
+
+        # Check finish reason for MAX_TOKENS
+        if finish_reason and ("MAX_TOKENS" in str(finish_reason) or "LENGTH" in str(finish_reason)):
+            logger.warning(
+                f"MAX_TOKENS detected at recursion depth {recursion_depth}. "
+                f"Splitting page into regions..."
+            )
+            return self._process_with_region_splitting(
+                image=image,
+                request=request,
+                region_offset_x=region_offset_x,
+                region_offset_y=region_offset_y,
+                recursion_depth=recursion_depth
+            )
 
         # Calculate latency
         latency_ms = (time.time() - start_time) * 1000
@@ -134,11 +196,37 @@ class VLMClient:
                 request=request,
                 latency_ms=latency_ms,
             )
+            
+            # Adjust bounding boxes for region offset
+            if region_offset_x != 0 or region_offset_y != 0:
+                for element in vlm_response.elements:
+                    if element.bbox:
+                        element.bbox.x0 += region_offset_x
+                        element.bbox.y0 += region_offset_y
+                        element.bbox.x1 += region_offset_x
+                        element.bbox.y1 += region_offset_y
+            
             return vlm_response
 
-        except Exception as e:
+        except (ValueError, json.JSONDecodeError) as e:
+            # Check if this is a JSON parse error that might be due to MAX_TOKENS truncation
+            # If finish_reason indicates MAX_TOKENS, try region splitting
+            if finish_reason and ("MAX_TOKENS" in str(finish_reason) or "LENGTH" in str(finish_reason)):
+                # MAX_TOKENS was detected - try region splitting
+                logger.warning(
+                    f"JSON parse failed due to MAX_TOKENS truncation at recursion depth {recursion_depth}. "
+                    f"Splitting page into regions..."
+                )
+                return self._process_with_region_splitting(
+                    image=image,
+                    request=request,
+                    region_offset_x=region_offset_x,
+                    region_offset_y=region_offset_y,
+                    recursion_depth=recursion_depth
+                )
+            
             logger.error(f"Failed to parse VLM response: {e}")
-            logger.debug(f"Raw response: {raw_response}")
+            logger.debug(f"Raw response: {raw_response[:500] if raw_response else 'None'}...")  # Log first 500 chars
 
             # Return error response
             return self._create_error_response(
@@ -146,6 +234,203 @@ class VLMClient:
                 raw_response=raw_response,
                 latency_ms=latency_ms,
             )
+        except Exception as e:
+            logger.error(f"Failed to parse VLM response: {e}")
+            logger.debug(f"Raw response: {raw_response[:500] if raw_response else 'None'}...")
+
+            # Return error response
+            return self._create_error_response(
+                error_message=f"Response parsing failed: {e}",
+                raw_response=raw_response,
+                latency_ms=latency_ms,
+            )
+
+    def _process_with_region_splitting(
+        self,
+        image: Union[str, Path, Image.Image, np.ndarray],
+        request: VLMRequest,
+        region_offset_x: int,
+        region_offset_y: int,
+        recursion_depth: int
+    ) -> VLMResponse:
+        """
+        Split image into regions and process recursively.
+        
+        Splits page vertically (top/bottom) or horizontally (left/right) and processes each region separately.
+        If a region also hits MAX_TOKENS, recursively splits it further.
+        
+        Args:
+            image: Input image
+            request: VLM request
+            region_offset_x: X offset for this region
+            region_offset_y: Y offset for this region
+            recursion_depth: Current recursion depth
+            
+        Returns:
+            Merged VLMResponse from all regions
+        """
+        # Safety check: prevent infinite recursion
+        MAX_RECURSION_DEPTH = 10
+        if recursion_depth >= MAX_RECURSION_DEPTH:
+            logger.error(
+                f"Maximum recursion depth ({MAX_RECURSION_DEPTH}) reached. "
+                f"Returning error response for region."
+            )
+            return self._create_error_response(
+                error_message=f"Maximum recursion depth reached - region too dense to process",
+                raw_response=None,
+                latency_ms=0.0,
+            )
+        
+        # Load image
+        if isinstance(image, (str, Path)):
+            pil_image = Image.open(image)
+        elif isinstance(image, Image.Image):
+            pil_image = image
+        elif isinstance(image, np.ndarray):
+            pil_image = Image.fromarray(image)
+        else:
+            raise TypeError(f"Unsupported image type: {type(image)}")
+        
+        width, height = pil_image.size
+        
+        # Safety check: if region is too small, don't split further
+        MIN_REGION_SIZE = 100  # pixels
+        if width < MIN_REGION_SIZE or height < MIN_REGION_SIZE:
+            logger.warning(
+                f"Region too small to split further ({width}x{height}). "
+                f"Attempting to process as-is (may fail)."
+            )
+            # Try processing the small region anyway - might work if content is sparse
+            return self._detect_elements_with_splitting(
+                image=image,
+                request=request,
+                region_offset_x=region_offset_x,
+                region_offset_y=region_offset_y,
+                recursion_depth=recursion_depth + 1
+            )
+        
+        # Split vertically (top/bottom) - this is usually better for documents
+        # If page is wider than tall, split horizontally instead
+        if width > height:
+            # Split horizontally (left/right)
+            split_coord = width // 2
+            region1 = pil_image.crop((0, 0, split_coord, height))
+            region2 = pil_image.crop((split_coord, 0, width, height))
+            region1_offset_x = region_offset_x
+            region1_offset_y = region_offset_y
+            region2_offset_x = region_offset_x + split_coord
+            region2_offset_y = region_offset_y
+            logger.info(
+                f"Recursion depth {recursion_depth}: Splitting horizontally at x={split_coord} "
+                f"(left: 0-{split_coord}, right: {split_coord}-{width})"
+            )
+        else:
+            # Split vertically (top/bottom)
+            split_coord = height // 2
+            region1 = pil_image.crop((0, 0, width, split_coord))
+            region2 = pil_image.crop((0, split_coord, width, height))
+            region1_offset_x = region_offset_x
+            region1_offset_y = region_offset_y
+            region2_offset_x = region_offset_x
+            region2_offset_y = region_offset_y + split_coord
+            logger.info(
+                f"Recursion depth {recursion_depth}: Splitting vertically at y={split_coord} "
+                f"(top: 0-{split_coord}, bottom: {split_coord}-{height})"
+            )
+        
+        # Process each region recursively
+        logger.info(f"Processing region 1 (offset: {region1_offset_x}, {region1_offset_y})...")
+        response1 = self._detect_elements_with_splitting(
+            image=region1,
+            request=request,
+            region_offset_x=region1_offset_x,
+            region_offset_y=region1_offset_y,
+            recursion_depth=recursion_depth + 1
+        )
+        
+        logger.info(f"Processing region 2 (offset: {region2_offset_x}, {region2_offset_y})...")
+        response2 = self._detect_elements_with_splitting(
+            image=region2,
+            request=request,
+            region_offset_x=region2_offset_x,
+            region_offset_y=region2_offset_y,
+            recursion_depth=recursion_depth + 1
+        )
+        
+        # Merge responses
+        merged_response = self._merge_region_responses(response1, response2)
+        
+        logger.info(
+            f"Recursion depth {recursion_depth}: Merged {len(response1.elements)} + "
+            f"{len(response2.elements)} = {len(merged_response.elements)} elements"
+        )
+        
+        return merged_response
+
+    def _merge_region_responses(
+        self,
+        response1: VLMResponse,
+        response2: VLMResponse
+    ) -> VLMResponse:
+        """
+        Merge two VLM responses from different regions into a single response.
+        
+        Args:
+            response1: First region response
+            response2: Second region response
+            
+        Returns:
+            Merged VLMResponse
+        """
+        from ehrx.vlm.models import ProcessingMetadata
+        from datetime import datetime
+        
+        # Combine elements
+        merged_elements = list(response1.elements) + list(response2.elements)
+        
+        # Recalculate overall confidence
+        if merged_elements:
+            overall_confidence = sum(
+                elem.confidence_scores.overall() for elem in merged_elements
+            ) / len(merged_elements)
+        else:
+            overall_confidence = 0.0
+        
+        # Combine review reasons
+        review_reasons = list(response1.review_reasons) + list(response2.review_reasons)
+        if "region_split" not in str(review_reasons).lower():
+            review_reasons.append("Page split into regions due to MAX_TOKENS")
+        
+        # Determine if review needed
+        requires_review = (
+            response1.requires_human_review or 
+            response2.requires_human_review or
+            overall_confidence < self.config.confidence_threshold_overall
+        )
+        
+        # Merge processing metadata
+        merged_metadata = ProcessingMetadata(
+            model_name=self.config.model_name,
+            processing_timestamp=datetime.utcnow().isoformat(),
+            api_latency_ms=(
+                (response1.processing_metadata.api_latency_ms or 0) +
+                (response2.processing_metadata.api_latency_ms or 0)
+            ),
+            cost_estimate_usd=None,  # Will be calculated at higher level
+            human_reviewed=False,
+            review_flags=list(response1.processing_metadata.review_flags) + 
+                        list(response2.processing_metadata.review_flags)
+        )
+        
+        return VLMResponse(
+            elements=merged_elements,
+            processing_metadata=merged_metadata,
+            overall_confidence=overall_confidence,
+            requires_human_review=requires_review,
+            review_reasons=review_reasons,
+            raw_response=None  # Don't store raw responses for merged results
+        )
 
     def _prepare_image(
         self,
@@ -205,7 +490,7 @@ class VLMClient:
         prompt: str,
         max_tokens: int,
         temperature: float,
-    ) -> str:
+    ) -> tuple[str, Optional[str]]:
         """
         Call Gemini API with retry logic for transient failures.
 
@@ -314,14 +599,6 @@ class VLMClient:
                 else:
                     finish_reason_str = str(finish_reason)
 
-                if "MAX_TOKENS" in finish_reason_str or "LENGTH" in finish_reason_str:
-                    logger.warning(
-                        f"Response truncated due to token limit (finish_reason: {finish_reason_str}). "
-                        f"Consider increasing max_tokens or requesting more concise output."
-                    )
-                    # Don't fail - attempt to parse what we got, but it will likely fail
-                    # Better: In future, we should retry with instructions to be more concise
-
                 # Track usage
                 self._request_count += 1
 
@@ -339,7 +616,7 @@ class VLMClient:
                         f"output: {usage.candidates_token_count} tokens)"
                     )
 
-                return response_text
+                return response_text, finish_reason_str
 
             except Exception as e:
                 last_error = e
